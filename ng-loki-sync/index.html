@@ -1,0 +1,35 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>lokijs-test</title>
+    </head>
+    <body ng-controller="mainCtrl">
+        <div ng-controller="inputCtrl">
+        <form id="input-form" ng-submit="lokiEvents.submit($event)">
+            <label>name:</label>
+            <input type="text" name="name" ng-model="lokiModel.name"><br>
+            <label>age:</label>
+            <input type="number" name="age" ng-model="lokiModel.age"><br>
+            <button type="submit">submit</button>
+        </form>
+        </div>
+        <hr/>
+        <div ng-controller="listCtrl">
+        <ul>
+            <li ng-repeat="item in contacts.find() track by $index">
+                <span>{{item.name}}</span>&nbsp;
+                <span>{{item.age}}</span>&nbsp;
+                <button type="button" ng-click="lokiEvents.remove(item)">dele</button>
+            </li>
+        </ul>
+        </div>
+        <script src="./js/angular.js"></script>
+        <script src="./js/lokijs.js"></script>
+        <script src="./js/loki-indexed-adapter.js"></script>
+        <script src="./js/loki-angular.js"></script>
+        <script src="./js/app-loki.js"></script>
+    </body>
+</html>
