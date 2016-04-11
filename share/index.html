@@ -6,27 +6,45 @@
     <title>sns-share</title>
 </head>
 <body>
-<button id="qzone">qzone</button>
-<button id="sina">sina weibo</button>
-<button id="kaixin">kaixin</button>
-<button id="renren">renren</button>
-<button id="douban">douban</button>
+<div id="webshare">
+    <button id="qzone">qzone</button>
+    <button id="sina">sina weibo</button>
+    <button id="kaixin">kaixin</button>
+    <button id="renren">renren</button>
+    <button id="douban">douban</button>
+</div>
+<br><br>
+<div id="nativeshare">
+    <button id="sinaWeibo">sinaWeibo-native</button>
+    <button id="wiexin">weixin-native</button>
+    <button id="weixinFriend">weixinFriend-native</button>
+    <button id="QQ">QQ-native</button>
+    <button id="QZone">QZone-native</button>
+</div>
 <script src="./sns-share.js"></script>
 <script>
-    
-	var buttons = document.getElementsByTagName("button");
-	for (var i=0,len=buttons.length; i<len; i++) {
-	    buttons[i].onclick = function() {
-		    
-			var shareType = this.getAttribute("id");
-		    snsShare(shareType,{
+    var shareData = {
             title: "分享标题",
             content: "这里是内容呀",
             url: "http://www.taobao.com",
             pic: "http://placehold.it/200x200"
-            })
+            }
+	var webButton = document.getElementById("webshare").getElementsByTagName("button");
+	for (var i=0,len=webButton.length; i<len; i++) {
+	    webButton[i].onclick = function() {
+		    
+			var shareType = this.getAttribute("id");
+		    snsShare(shareType, shareData)
 		}
 	}
+    var nativeButton = document.getElementById("nativeshare").getElementsByTagName("button");
+    for (var i=0,len=nativeButton.length; i<len; i++) {
+        nativeButton[i].onclick = function() {
+            
+            var shareType = this.getAttribute("id");
+            snsShare(shareType,shareData, true)
+        }
+    }
 </script>
 </body>
 </html>
