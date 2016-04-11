@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>sns-share</title>
+</head>
+<body>
+<button id="qzone">qzone</button>
+<button id="sina">sina weibo</button>
+<button id="kaixin">kaixin</button>
+<button id="renren">renren</button>
+<button id="douban">douban</button>
+<script src="./sns-share.js"></script>
+<script>
+    
+	var buttons = document.getElementsByTagName("button");
+	for (var i=0,len=buttons.length; i<len; i++) {
+	    buttons[i].onclick = function() {
+		    
+			var shareType = this.getAttribute("id");
+		    snsShare(shareType,{
+            title: "分享标题",
+            content: "这里是内容呀",
+            url: "http://www.taobao.com",
+            pic: "http://placehold.it/200x200"
+            })
+		}
+	}
+</script>
+</body>
+</html>
