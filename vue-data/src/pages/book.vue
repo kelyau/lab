@@ -17,19 +17,14 @@
 <script>
 import List from '@/components/list';
 import Content from '@/components/content';
-import * as actions from '@/store/actions';
+import { mapGetters } from 'vuex';
 
 export default {
-  vuex: {
-    getters: {
-      bookList: ({ bookList }) => bookList,
-    },
-    actions: {
-      fetchBookList: actions.fetchBookList,
-    },
-  },
+  computed: mapGetters({
+    bookList: 'bookList',
+  }),
   created() {
-    window.console.log(this.fetchBookList);
+    this.$store.dispatch('fetchBookList');
     // this.fetchBookList();
   },
   components: { bookList: List, bookContent: Content },
