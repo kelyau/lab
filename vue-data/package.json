@@ -16,7 +16,9 @@
     "baconjs": "^0.7.92",
     "iview": "^2.0.0-rc.9",
     "vue": "^2.2.2",
-    "vue-router": "^2.2.0"
+    "vue-resource": "^1.2.1",
+    "vue-router": "^2.2.0",
+    "vuex": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

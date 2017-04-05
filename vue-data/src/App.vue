@@ -6,7 +6,10 @@
 
 <script>
 
+import store from '@/store/';
+
 export default {
+  store,
   name: 'app',
 };
 </script>

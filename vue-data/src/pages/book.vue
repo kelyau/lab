@@ -8,7 +8,7 @@
         <book-content></book-content>
       </i-col>
     </Row>
-    
+
   </div>
 </template>
 <style>
@@ -17,10 +17,20 @@
 <script>
 import List from '@/components/list';
 import Content from '@/components/content';
+import * as actions from '@/store/actions';
 
 export default {
-  data() {
-    return {};
+  vuex: {
+    getters: {
+      bookList: ({ bookList }) => bookList,
+    },
+    actions: {
+      fetchBookList: actions.fetchBookList,
+    },
+  },
+  created() {
+    window.console.log(this.fetchBookList);
+    // this.fetchBookList();
   },
   components: { bookList: List, bookContent: Content },
 };
