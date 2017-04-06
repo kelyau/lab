@@ -2,7 +2,7 @@
   <div class="layout-content">
     <Row>
       <i-col span="5">
-        <book-list :books="bookList"></book-list>
+        <book-list :books="bookList" :bookActive="bookItem.id"></book-list>
       </i-col>
       <i-col span="19">
         <book-content :book="bookItem"></book-content>
