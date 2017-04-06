@@ -6,7 +6,15 @@
     </ul>
 </template>
 
-<style></style>
+<style scoped>
+  ul {
+    padding: 10px 0;
+  }
+  li {
+    text-align: left;
+    padding: 5px 10px;
+  }
+</style>
 
 <script>
   export default {

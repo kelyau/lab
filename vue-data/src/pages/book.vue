@@ -31,6 +31,7 @@ export default {
   }),
   created() {
     this.$store.dispatch('fetchBookList', { tag: 'zh' });
+    this.fetchData();
   },
   watch: {
     $route: 'fetchData',
@@ -38,9 +39,16 @@ export default {
   methods: {
     fetchData() {
       this.id = this.$route.params.id;
+      if (!parseInt(this.id, 10)) {
+        this.$store.dispatch('initBookItem');
+        return;
+      }
       this.$store.dispatch('fetchBookItem', { id: this.id });
     },
   },
   components: { bookList: List, bookContent: Content },
+  destroyed() {
+    this.$store.dispatch('destroyBookItem');
+  },
 };
 </script>
