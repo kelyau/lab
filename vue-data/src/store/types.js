@@ -1,4 +1,3 @@
-export default {};
 export const GET_BOOK_LIST = 'GET_BOOK_LIST';
 export const GET_BOOK_LIST_SUCCESS = 'GET_BOOK_LIST_SUCCESS';
 

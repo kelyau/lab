@@ -1,8 +1,8 @@
 import { getBookList, getBookItem } from '@/service/http';
 import {
-  GET_BOOK_ITEM,
+  // GET_BOOK_ITEM,
   GET_BOOK_ITEM_SUCCESS,
-  GET_BOOK_LIST,
+  // GET_BOOK_LIST,
   GET_BOOK_LIST_SUCCESS,
 } from '../types';
 
@@ -12,13 +12,13 @@ const state = {
 };
 /* eslint-disable */
 const getters = {
-  bookList: state => state.list
+  bookList: state => state.list,
+  bookItem: state => state.book,
 };
 
 
 const mutations = {
   [GET_BOOK_ITEM_SUCCESS](state, book) {
-    
     state.book = book;
   },
   [GET_BOOK_LIST_SUCCESS](state, list) {
@@ -27,13 +27,15 @@ const mutations = {
 };
 /* eslint-disable */
 const actions = {
-  fetchBookList({ commit }) {
-    commit(GET_BOOK_LIST);
-    getBookList().then( res => commit( GET_BOOK_LIST_SUCCESS, res.json() ) )
+  fetchBookList({ commit }, query) {
+    //commit(GET_BOOK_LIST);
+    getBookList(query).then( res => {
+      commit( GET_BOOK_LIST_SUCCESS, res.body.books )
+    } );
   },
-  fetchBookItem({ commit }) {
-    commit(GET_BOOK_ITEM);
-    getBookItem().then( res => commit( GET_BOOK_ITEM_SUCCESS, res.json() ) )
+  fetchBookItem({ commit }, query) {
+    //commit(GET_BOOK_ITEM);
+    getBookItem(query).then( res => commit( GET_BOOK_ITEM_SUCCESS, res.body ) )
   }
 };
 

@@ -9,12 +9,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Hello',
+      name: 'hello',
       component: Hello,
     },
     {
       path: '/book',
-      name: 'Book',
+      redirect: '/book/0',
+    },
+    {
+      path: '/book/:id',
+      name: 'book',
       component: Book,
     },
   ],

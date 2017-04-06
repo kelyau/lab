@@ -8,9 +8,9 @@ const getBookList = (obj) => {
   if (!query) {
     query = { tag: 'en' };
   }
-  return Vue.http.get('https://api.douban.com/v2/book/search', query);
+  return Vue.http.get('/book/search', { params: query });
 };
 
-const getBookItem = id => Vue.http.get(`https://api.douban.com/v2/book/${id}`);
+const getBookItem = obj => Vue.http.get(`/book/${obj.id}`);
 
 export { getBookList, getBookItem };
