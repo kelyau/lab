@@ -13,7 +13,20 @@ module.exports = {
       .waitForElementVisible('#app', 5000)
       .assert.elementPresent('.hello')
       .assert.containsText('h1', 'Welcome to Your Vue.js App')
-      .assert.elementCount('img', 1)
-      .end();
+      .assert.elementCount('img', 1);
+  },
+  'my test': (browser) => {
+    browser
+      .click('.layout-nav li:nth-child(2) a')
+      .pause(6000);
+  },
+  当前book菜单: (browser) => {
+    browser
+      .expect
+      .element('.layout-nav li:nth-child(2)')
+      .to
+      .have
+      .attribute('class')
+      .which.contains('ivu-menu-item-selected');
   },
 };
