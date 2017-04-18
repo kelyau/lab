@@ -5,13 +5,13 @@
       <Input type="text" v-model="content.title"/>
     </Form-item>
     <Form-item label="时间">
-      <Date-picker type="date" placeholder="选择时间" style="width: 200px"></Date-picker>
+      <Date-picker type="date" placeholder="选择时间" style="width: 200px" @on-change="changeDate"></Date-picker>
     </Form-item>
     <Form-item label="标签">
       <Input type="text" v-model="content.tag" />
     </Form-item>
     <Form-item>
-      <Input v-model="content.text" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></Input>
+      <Input type="textarea" v-model="content.text" />
     </Form-item>
     <Form-item>
       <Button type="success" @click="submit()">确定</Button>&nbsp;
@@ -34,14 +34,14 @@
 export default {
   methods: {
     submit() {
-      this.Utils.log(this.content);
+      this.$store.dispatch('');
     },
     cancel() {
 
     },
-  },
-  created() {
-    this.$on('on-form-change', (e) => { this.log(e); });
+    changeDate(date) {
+      this.content.date = date;
+    },
   },
   props: ['content'],
 };
