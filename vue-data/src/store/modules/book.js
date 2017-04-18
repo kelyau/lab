@@ -60,6 +60,4 @@ const actions = {
   }
 };
 
-
-
-export default { state, mutations, actions, getters };
+export default {state, getters, mutations, actions};
