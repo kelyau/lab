@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-content">
+  <div class="book">
     <Row>
       <i-col span="5">
         <book-list :books="bookList" :bookActive="bookItem.id"></book-list>
