@@ -3,8 +3,8 @@
     <div  v-flex-container>
       <div v-flex-item width="200px"></div>
       <div v-flex-item>
-        
-        <button type="success" @click="newNote()">写一篇</button>
+        <note-edit :content="editContent"></note-edit>
+        <Button type="success" @click="newNote()">写一篇</Button>
       </div>
     </div>
   </div>
@@ -13,6 +13,8 @@
 <style></style>
 
 <script>
+import noteEdit from '@/components/noteEdit';
+
 export default{
   data() {
     return {
@@ -26,5 +28,6 @@ export default{
       this.edit = true;
     },
   },
+  components: { noteEdit },
 };
 </script>

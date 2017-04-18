@@ -9,12 +9,13 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 /* eslint-disable */
 
+import * as utils from './service/utils';
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRoute);
 Vue.use(iView);
-
+Vue.prototype.Utils = utils;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

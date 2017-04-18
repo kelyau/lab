@@ -10,5 +10,11 @@ const UUID = () => {
   return uuid;
 };
 
+const log = (msg) => {
+  /* eslint-disable */
+  console.log(msg);
+  /* eslint-enable */
+};
+
 /* eslint-disable */
-export { UUID };
+export { UUID, log };

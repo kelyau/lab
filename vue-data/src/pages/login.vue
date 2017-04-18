@@ -1,8 +1,10 @@
 <template>
-  <div class="login">
-    <Input type="text" v-model="user.username" placeholder="username" />
-    <Input type="text" v-model="user.password" placeholder="password" />
-    <Button type="success" @click="login()">登录</Button>
+  <div>
+    <div class="login">
+      <Input type="text" v-model="user.username" placeholder="username" />
+      <Input type="text" v-model="user.password" placeholder="password" />
+      <Button type="success" @click="login()">登录</Button>
+    </div>
   </div>
 </template>
 
@@ -10,6 +12,7 @@
   .login {
     width: 380px;
     margin: 100px auto;
+    text-align: center;
   }
 </style>
 
