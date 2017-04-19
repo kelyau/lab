@@ -8,7 +8,7 @@
       <Date-picker type="date" placeholder="选择时间" style="width: 200px" @on-change="changeDate"></Date-picker>
     </Form-item>
     <Form-item label="标签">
-      <Input type="text" v-model="content.tag" />
+      <Input type="text" v-model="content.tags" />
     </Form-item>
     <Form-item>
       <Input type="textarea" v-model="content.text" />
@@ -34,10 +34,14 @@
 export default {
   methods: {
     submit() {
-      this.$store.dispatch('');
+      this.$store.dispatch('postNote', Object.assign({}, this.content))
+        .then((u) => {
+          this.$emit('on-close');
+          this.$router.push({ name: 'note', params: { id: u.toJSON().objectId } });
+        });
     },
     cancel() {
-
+      this.$emit('on-close');
     },
     changeDate(date) {
       this.content.date = date;

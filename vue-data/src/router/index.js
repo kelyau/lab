@@ -32,6 +32,10 @@ const router = new Router({
     },
     {
       path: '/note',
+      redirect: '/note/0',
+    },
+    {
+      path: '/note/:id',
       name: 'note',
       component: require('@/pages/note'),
     },

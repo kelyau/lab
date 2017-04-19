@@ -1,7 +1,7 @@
 <template>
     <ul>
-      <li v-for="book in books" :class="{active: bookActive === book.id}">
-        <router-link :to="{name:'book', params: {id: book.id}}">{{book.title}}</router-link>
+      <li v-for="item in list" :class="{active: active === item[activeProp]}">
+        <router-link :to="{name: name, params: {id: item[activeProp]}}">{{item.title}}</router-link>
       </li>
     </ul>
 </template>
@@ -21,6 +21,6 @@
 
 <script>
   export default {
-    props: ['books', 'bookActive'],
+    props: ['list', 'active', 'activeProp', 'name'],
   };
 </script>

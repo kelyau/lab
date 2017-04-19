@@ -1,33 +1,70 @@
 <template>
   <div class="note">
     <div  v-flex-container>
-      <div v-flex-item width="200px"></div>
+      <div v-flex-item width="200px">
+        <note-list :list="noteList" :active="noteCurr.objectId" active-prop="objectId" name="note"></note-list>
+      </div>
       <div v-flex-item>
-        <note-edit :content="editContent"></note-edit>
+        <transition 
+          name="slide"
+          enter-active-class="animated slideDown"
+          leave-active-class="animated slideUp">
+          <note-edit :content="editContent" @on-close="hideNoteEidt" v-if="editStatus"></note-edit>
+        </transition>
         <Button type="success" @click="newNote()">写一篇</Button>
+        <note-content :data="noteCurr"></note-content>
       </div>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+
+</style>
 
 <script>
 import noteEdit from '@/components/noteEdit';
+import List from '@/components/list';
+import noteContent from '@/components/noteContent';
+import { mapGetters } from 'vuex';
 
 export default{
   data() {
     return {
-      edit: false,
+      editStatus: false,
       editContent: {},
+      id: '',
     };
+  },
+  created() {
+    this.$store.dispatch('getNotes');
+    this.fetchData();
+  },
+  computed: mapGetters({
+    noteList: 'noteList',
+    noteCurr: 'noteCurr',
+  }),
+  watch: {
+    $route: 'fetchData',
   },
   methods: {
     newNote() {
       this.editContent = {};
-      this.edit = true;
+      this.editStatus = true;
+    },
+    hideNoteEidt() {
+      this.editContent = {};
+      this.editStatus = false;
+    },
+    fetchData() {
+      this.id = this.$route.params.id;
+      if (this.id === '0') {
+        this.$store.dispatch('initNote');
+        return;
+      }
+      this.$store.dispatch('getNote', this.id);
     },
   },
-  components: { noteEdit },
+  components: { noteEdit, 'note-list': List, noteContent },
 };
 </script>

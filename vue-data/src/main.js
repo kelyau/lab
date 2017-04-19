@@ -9,6 +9,8 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 /* eslint-disable */
 
+import 'animate.css/animate.css';
+
 import * as utils from './service/utils';
 
 Vue.config.productionTip = false;

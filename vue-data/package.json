@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "baconjs": "^0.7.92",
     "iview": "^2.0.0-rc.9",
     "parse": "^1.9.2",

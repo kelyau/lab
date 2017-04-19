@@ -18,37 +18,27 @@ const getters = {
 /* eslint-disable */
 const mutations = {
   [types.SIGNUP](state, obj) {
-    state.user = {
-      username: obj.get('username'),
-      email: obj.get('email'),
-    };
-    state.token = obj.get('sessionToken');
-    auth.login(obj.get('sessionToken'));
+    state.user = obj;
+    state.token = obj.sessionToken;
+    
   },
   [types.LOGIN](state, obj) {
-    state.user = {
-      username: obj.get('username'),
-      email: obj.get('email')
-    };
-    state.token = obj.get('sessionToken');
-    auth.login(obj.get('sessionToken'));
+    state.user = obj;
+    state.token = obj.sessionToken;
   },
   [types.LOGOUT](state) {
     state.user = {};
     state.token = '';
-    auth.logout();
   }
 };
 /* eslint-enable */
 const actions = {
   signup({ commit }, user) {
-    const newUser = new Parse.User();
-    newUser.set('username', user.username);
-    newUser.set('password', user.password);
-    newUser.set('email', user.email);
+    const newUser = new Parse.User(user);
     return newUser.signUp(null, {
       success: (u) => {
-        commit('SIGNUP', u);
+        commit('SIGNUP', u.toJSON());
+        auth.login(u.toJSON().sessionToken);
       },
       error: (u, error) => {
         /* eslint-disable */
@@ -61,14 +51,16 @@ const actions = {
     const token = auth.getToken();
     return Parse.User.become(token)
       .then((user) => {
-        commit('SIGNUP', user);
+        commit('SIGNUP', user.toJSON());
+        auth.login(user.toJSON().sessionToken);
         return user;
       }, error => error);
   },
   login({ commit }, user) {
     return Parse.User.logIn(user.username, user.password)
       .then((u) => {
-        commit('LOGIN', u);
+        commit('LOGIN', u.toJSON());
+        auth.login(u.toJSON().sessionToken);
       }, (error) => {
         /* eslint-disable */
         console.log(error);
@@ -78,6 +70,7 @@ const actions = {
   },
   logout({ commit }) {
     commit('LOGOUT');
+    auth.logout();
     return Parse.User.logOut();
   },
 };
