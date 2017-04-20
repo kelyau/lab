@@ -7,19 +7,24 @@
       <div v-flex-item>
         <transition 
           name="slide"
-          enter-active-class="animated slideDown"
-          leave-active-class="animated slideUp">
+          enter-active-class="animated slideInDown"
+          leave-active-class="animated slideOutUp">
           <note-edit :content="editContent" @on-close="hideNoteEidt" v-if="editStatus"></note-edit>
         </transition>
-        <Button type="success" @click="newNote()">写一篇</Button>
-        <note-content :data="noteCurr"></note-content>
+        <div class="content">
+          <Button type="success" @click="newNote()">写一篇</Button>
+          <Button type="success" @click="editNote()">编辑</Button>
+          <note-content :data="noteCurr"></note-content>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-
+<style scoped>
+.content {
+  padding: 10px;
+}
 </style>
 
 <script>
@@ -50,6 +55,10 @@ export default{
   methods: {
     newNote() {
       this.editContent = {};
+      this.editStatus = true;
+    },
+    editNote() {
+      this.editContent = Object.assign({}, this.noteCurr);
       this.editStatus = true;
     },
     hideNoteEidt() {
