@@ -5,6 +5,7 @@
         <book-list :list="bookList" :active="bookItem.id" active-prop="id" name="book"></book-list>
       </i-col>
       <i-col span="19">
+        <div class="loading" v-if="loading"><span>loading</span></div>
         <book-content :book="bookItem"></book-content>
       </i-col>
     </Row>
@@ -12,7 +13,16 @@
   </div>
 </template>
 <style>
-
+  .loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(200,200,200,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 </style>
 <script>
 import List from '@/components/list';
@@ -23,6 +33,7 @@ export default {
   data() {
     return {
       id: '',
+      loading: false,
     };
   },
   computed: mapGetters({
@@ -38,12 +49,14 @@ export default {
   },
   methods: {
     fetchData() {
+      this.loading = true;
       this.id = this.$route.params.id;
       if (!parseInt(this.id, 10)) {
         this.$store.dispatch('initBookItem');
         return;
       }
-      this.$store.dispatch('fetchBookItem', { id: this.id });
+      this.$store.dispatch('fetchBookItem', { id: this.id })
+          .then(() => { this.loading = false; });
     },
   },
   components: { bookList: List, bookContent: Content },

@@ -41,7 +41,7 @@ const actions = {
     } );
   },
   fetchBookItem({ commit }, query) {
-    getBookItem(query).then( res => commit( types.GET_BOOK_ITEM_SUCCESS, res.body ) )
+    return getBookItem(query).then( res => commit( types.GET_BOOK_ITEM_SUCCESS, res.body ) )
   },
   initBookItem({ commit }) {
     if (state.list[0]){ 

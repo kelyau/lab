@@ -8,7 +8,7 @@
       <Date-picker type="date" placeholder="选择时间" style="width: 200px" @on-change="changeDate"></Date-picker>
     </Form-item>
     <Form-item label="标签">
-      <Input type="text" v-model="content.tags" />
+      <Input type="text" :value="tags" @input="tagsValue" />
     </Form-item>
     <Form-item>
       <Input type="textarea" v-model="content.text" />
@@ -36,7 +36,13 @@
 export default {
   methods: {
     submit() {
-      this.$store.dispatch('postNote', Object.assign({}, this.content))
+      const note = Object.assign(
+        {},
+        this.content,
+        { tags: this.tagsProp ? this.tagsProp : this.tags },
+      );
+      this.Utils.log(this.tagsProp);
+      this.$store.dispatch('postNote', note)
         .then((u) => {
           this.$emit('on-close');
           this.$router.push({ name: 'note', params: { id: u.toJSON().objectId } });
@@ -48,7 +54,23 @@ export default {
     changeDate(date) {
       this.content.date = date;
     },
+    tagsValue(e) {
+      this.tagsProp = e;
+    },
+  },
+  data() {
+    return {
+      tagsProp: '',
+    };
   },
   props: ['content'],
+  computed: {
+    tags() {
+      if (this.content && this.content.tags) {
+        return this.content.tags.join(',');
+      }
+      return '';
+    },
+  },
 };
 </script>

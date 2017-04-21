@@ -5,11 +5,16 @@
         <note-list :list="noteList" :active="noteCurr.objectId" active-prop="objectId" name="note"></note-list>
       </div>
       <div v-flex-item>
+        <transition name="loading"
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut">
+          <div v-if="loading" class="loading">loading</div>
+        </transition>
         <transition 
           name="slide"
           enter-active-class="animated slideInDown"
           leave-active-class="animated slideOutUp">
-          <note-edit :content="editContent" @on-close="hideNoteEidt" v-if="editStatus"></note-edit>
+          <note-edit :content="editContent" @on-close="hideNoteEidt" v-show="editStatus"></note-edit>
         </transition>
         <div class="content">
           <Button type="success" @click="newNote()">写一篇</Button>
@@ -25,6 +30,16 @@
 .content {
   padding: 10px;
 }
+.loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(200,200,200,0.5);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 </style>
 
 <script>
@@ -39,6 +54,7 @@ export default{
       editStatus: false,
       editContent: {},
       id: '',
+      loading: false,
     };
   },
   created() {
@@ -62,18 +78,25 @@ export default{
       this.editStatus = true;
     },
     hideNoteEidt() {
-      this.editContent = {};
       this.editStatus = false;
+      this.editContent = {};
     },
     fetchData() {
       this.id = this.$route.params.id;
+      this.loading = true;
       if (this.id === '0') {
-        this.$store.dispatch('initNote');
+        this.$store.dispatch('initNote')
+          .then(() => { this.loading = false; });
         return;
       }
-      this.$store.dispatch('getNote', this.id);
+      this.$store.dispatch('getNote', this.id)
+          .then(() => { this.loading = false; });
     },
   },
   components: { noteEdit, 'note-list': List, noteContent },
+  beforeRouteUpdate(to, from, next) {
+    this.editStatus = false;
+    next();
+  },
 };
 </script>
