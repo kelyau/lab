@@ -46,6 +46,11 @@ var evDemo1 = Backbone.View.extend({
   },
   initialize: function(){
     this.render()
+    Bacon.fromEvent(document.getElementById("btn-a1"), "click")
+     .onValue(() => {this.update(1)});
+
+    Bacon.fromEvent(document.getElementById("btn-d1"), "click")
+        .onValue(() => {this.update(-1)}) 
   }
 });
 var evApp1 = new evDemo1;
