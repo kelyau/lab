@@ -55,7 +55,16 @@ var evDemo1 = Backbone.View.extend({
 });
 var evApp1 = new evDemo1;
 
-
+var arrayOut = Backbone.View.extend({
+  tagName: "pre",
+  initialize: function(){
+    this.render()
+  },
+  render: function(){
+    this.$el.text(this.model.array)
+    return this;
+  }
+})
 var arrayDemo = Backbone.View.extend({
   el: $("#array-demo"),
   store: [1,2,3,4,5,6],
@@ -68,12 +77,20 @@ var arrayDemo = Backbone.View.extend({
   initialize: function(){
     this.render()
   },
+  update: function(opt){
+    var view = new arrayOut({model: opt})
+    this.$("#array-out").html(view.render().el)
+  },
   run: function(){
+    var model = {
+      array: []
+    };
     var stream = Bacon.sequentially(200, [1,2,3,4,5,6])
       .flatMap( i => i*2)
-
-      Bacon.zipAsArray(stream)
-        .onValues(i => console.log(i)) 
+      .onValue( i => {
+        model.array.push(i)
+        this.update(model)
+      })
   }
 })
 var arrayApp = new arrayDemo

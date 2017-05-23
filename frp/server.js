@@ -13,3 +13,4 @@ require('http').createServer(function (request, response) {
         file.serve(request, response);
     }).resume();
 }).listen(8080);
+console.log("listen on: 8080")
