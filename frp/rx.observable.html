@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+<h2>fromEvent</h2>
+<button class="btn btn-success" id="click-fromevent">fromEvent</button>
+<div id="view-fromevent"></div>
+
+<h2>of</h2>
+<button class="btn btn-danger" id="click-of">of</button>
+<pre>1,2,3,4,5,6</pre>
+<div id="view-of"></div>
+
+<script src="//cdn.bootcss.com/rxjs/5.4.0/Rx.min.js"></script>
+<script>
+  // fromEvent
+  var $ =  function(select) {
+    return document.querySelector(select);
+  }
+  var clickFromevent = Rx.Observable.fromEvent($('#click-fromevent'), 'click');
+  clickFromevent.subscribe(x => {
+    var eleP = document.createElement('p');
+    eleP.innerHTML = JSON.stringify(x);
+    $('#view-fromevent').appendChild(eleP);
+  });
+
+  // of
+  var clickOf = Rx.Observable.of(1,2,3,4,5,6);
+  Rx.Observable.fromEvent($('#click-of'), 'click')
+    .subscribe(() => {
+        clickOf.map(x => x * 2)
+          .subscribe(x => {
+          var eleP = document.createElement('span');
+          eleP.innerHTML = x;
+          $('#view-of').appendChild(eleP);
+        })
+    });
+ 
+
+
+</script>
+</body>
+</html>

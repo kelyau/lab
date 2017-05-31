@@ -11,5 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "node-static": "^0.7.9"
+  },
+  "dependencies": {
+    "rxjs": "^5.4.0"
   }
 }
