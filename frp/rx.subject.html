@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+<body>
+<h2>Subject</h2>
+<pre>
+  var subject = new Rx.Subject();
+  subject.subject.scan((acc, curr) => acc + curr, 0)
+  .subscribe({
+    next: (x) => console.log(x)
+  });
+
+  document.querySelector('#click-subject').addEventListener('click', function() {
+    subject.next(2);
+  });
+</pre>
+<button class="btn btn-success" id="click-subject">subject next</button>
+
+<script src="//cdn.bootcss.com/rxjs/5.4.0/Rx.min.js"></script>
+<script>
+
+  var subject = new Rx.Subject();
+  subject.scan((acc, curr) => acc + curr, 0)
+  .subscribe({
+    next: (x) => console.log(x)
+  });
+
+  document.querySelector('#click-subject').addEventListener('click', function() {
+    subject.next(2);
+  });
+  
+
+</script>
+</body>
+</html>

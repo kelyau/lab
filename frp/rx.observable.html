@@ -9,13 +9,24 @@
 </head>
 <body>
 <h2>fromEvent</h2>
+<pre>
+  Rx.fromEvent(document.querySelector('#click-fromevent'), 'click')
+    .subscribe(event => console.log(event));
+</pre>
 <button class="btn btn-success" id="click-fromevent">fromEvent</button>
 <div id="view-fromevent"></div>
+<hr/>
 
 <h2>of</h2>
+<pre>
+  Rx.of(1,2,3,4,5,6)
+    .map(x => x*2)
+    .subscribe(x => console.log(x))
+</pre>
 <button class="btn btn-danger" id="click-of">of</button>
 <pre>1,2,3,4,5,6</pre>
 <div id="view-of"></div>
+<hr/>
 
 <script src="//cdn.bootcss.com/rxjs/5.4.0/Rx.min.js"></script>
 <script>
