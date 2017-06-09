@@ -10,13 +10,32 @@
 		.list-group {
 			padding-top: 50px;
 		}
+		form {
+			padding-top: 50px;
+		}
 	</style>
 </head>
 <body>
 <div class="container">
   <div class="row">
-     <div class="col-md-4 col-md-offset-3">
+     <div class="col-md-4 col-md-offset-1">
 			 <div class="list-group" id="posts"></div>
+		 </div>
+		 <div class="col-md-3">
+			 <form>
+				 <div class="form-group">
+					 <label>Title:</label>
+					 <input name="title" type="text" class="form-control">
+				 </div>
+				 <div class="form-group">
+					 <label>Content:</label>
+					 <textarea name="content" type="text" class="form-control"></textarea>
+				 </div>
+				 <div class="form-group">
+					 <label>&nbsp;</label>
+					 <button class="btn btn-success" type="submit">submit</button>
+				 </div>
+			 </form>
 		 </div>
   </div>
 </div>
@@ -38,7 +57,13 @@
 	var Collection = function(initialContents){
 		Fn.prototype.__addFunc = function(newItem){
 			return function(collection) {
-				return collection.concat(newItem);
+				if (collection.length > 10) {
+					collection.pop();
+				}
+				return collection.concat(newItem).sort((a, b) => {
+					return  + new Date(b.createdAt) - new Date(a.createdAt);
+				})
+				
 			}
 		}
 		Fn.prototype.__removeFunc = function(removeItem){
@@ -92,7 +117,7 @@
 				destroy$.next('destroy')
 			}
 			this.subscribe = function(f){
-				return collection$.subscribe(f)
+				return this.collection.subscribe(f)
 			}									 
 			
 		}
@@ -103,9 +128,30 @@
 	var viewList = function(data){
 		var html = '';
 		html = data.map(item => `<a href="javascript:;" class="list-group-item">${item.title}</a>`).join('\n');
-    $('#posts').append(html)
+    
+		$('#posts').html(html)
 	}
-	
+
+	var Posts = Parse.Object.extend('Posts');
+
+	//form-event
+	$('form').on('submit', ev => {
+    ev.preventDefault();
+	  var titleEle = $('input[name=title]');
+		var contentEle = $('textarea[name=content]');
+		if (!titleEle.val() || !contentEle.val()){
+			return ;
+		}
+		var post = new Posts({
+			title: titleEle.val(),
+			content: contentEle.val()
+		});
+		post.save(null)
+		    .then(() => {
+           titleEle.val('');
+					 contentEle.val('');
+				})
+	});
 	
   //subscribe socket
 	var postsQuery = new Parse.Query('Posts');
@@ -116,15 +162,16 @@
 	posts$.subscribe(res => {
 		viewList(res)
 	})
-	postsQuery.find()
+	postsQuery.descending('createdAt')
 	          .limit(10)
+	          .find()
 	          .then(function(res){
                var tmp = res.map(res => res.toJSON());
 							 posts$.add(tmp);
 						})
 	
-
-	var Posts = Parse.Object.extend('Posts');
+ 
+	
 
   postsSubs.on('create', res => posts$.add(res.toJSON()));
 	postsSubs.on('delete', res => posts$.remove(res.toJSON()));
