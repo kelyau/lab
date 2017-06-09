@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+	<style>
+		.list-group {
+			padding-top: 50px;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+     <div class="col-md-4 col-md-offset-3">
+			 <div class="list-group" id="posts"></div>
+		 </div>
+  </div>
+</div>
+<script src="//cdn.bootcss.com/zepto/1.2.0/zepto.js"></script>
+<script src="//cdn.bootcss.com/parse/1.9.2/parse.min.js"></script>
+<script src="./Rx.js"></script>
+<script>
+	
+	//parse initialize
+	Parse.initialize("123456");
+  Parse.serverURL = 'http://portal.xiandusi.com:1337/example';
+	
+	//parse login
+	Parse.User.logIn('abc','123456', {
+		success: user => console.log('login success'),
+		error: err => console.log('login fail', err)
+	});
+	
+	var Collection = function(initialContents){
+		Fn.prototype.__addFunc = function(newItem){
+			return function(collection) {
+				return collection.concat(newItem);
+			}
+		}
+		Fn.prototype.__removeFunc = function(removeItem){
+			return function(collection) {
+				var findIndex = collection.findIndex(function(item) {
+					return item.id == removeItem.id
+				})
+				if (findIndex > -1){
+					collection.splice(findIndex, 1);
+				}
+				return collection;
+			}
+		}
+		Fn.prototype.__updateFunc = function(newItem) {
+      return function(collection){
+				var findIndex = collection.findIndex(function(item) {
+					return item.id == newItem.id;
+				})
+				if (findIndex > -1){ 
+          collection[findIndex] = Object.assign(collection[findIndex], newItem)
+				}
+				return collection
+			}
+		}
+		Fn.prototype.__destroyFunc = function() {
+      return function(collection) {
+				return []
+			}
+		}
+		function Fn() {
+			var remove$ = new Rx.Subject;
+			var update$ = new Rx.Subject;
+			var destroy$ = new Rx.Subject;
+			var collection$ = new Rx.BehaviorSubject(initialContents);
+			var change$ = collection$.map(this.__addFunc)
+			                         .merge(remove$.map(this.__removeFunc))
+															 .merge(destroy$.map(this.__destroyFunc))
+															 .merge(update$.map(this.__updateFunc));
+
+			this.collection = change$.scan((acc, curr) => curr(acc), []);
+			this.remove = function(removeItem){
+				remove$.next(removeItem);
+			}
+			this.add = function(newItem){
+				collection$.next(newItem);
+			}
+			this.update = function(newItem){
+				update$.next(newItem)
+			}
+			this.destroy = function(){
+				destroy$.next('destroy')
+			}
+			this.subscribe = function(f){
+				return collection$.subscribe(f)
+			}									 
+			
+		}
+		return new Fn(initialContents)
+	}
+
+	//model-view
+	var viewList = function(data){
+		var html = '';
+		html = data.map(item => `<a href="javascript:;" class="list-group-item">${item.title}</a>`).join('\n');
+    $('#posts').append(html)
+	}
+	
+	
+  //subscribe socket
+	var postsQuery = new Parse.Query('Posts');
+	var postsSubs = postsQuery.subscribe();
+	
+	// query initialize posts
+	var posts$ = Collection([]);
+	posts$.subscribe(res => {
+		viewList(res)
+	})
+	postsQuery.find()
+	          .limit(10)
+	          .then(function(res){
+               var tmp = res.map(res => res.toJSON());
+							 posts$.add(tmp);
+						})
+	
+
+	var Posts = Parse.Object.extend('Posts');
+
+  postsSubs.on('create', res => posts$.add(res.toJSON()));
+	postsSubs.on('delete', res => posts$.remove(res.toJSON()));
+	postsSubs.on('update', res => posts$.update(res.toJSON()));
+	
+	postsSubs.on('error', res => console.log('error:', res));
+
+  
+
+</script>
+
+</body>
+</html>

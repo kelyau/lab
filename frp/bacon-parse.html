@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+  <title>demo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+	<style>
+		.list-group {
+			padding-top: 50px;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+     <div class="col-md-4 col-md-offset-3">
+			 <div class="list-group" id="posts"></div>
+		 </div>
+  </div>
+</div>
+<script src="//cdn.bootcss.com/zepto/1.2.0/zepto.js"></script>
+<script src="//cdn.bootcss.com/parse/1.9.2/parse.min.js"></script>
+<script src="./Bacon.js"></script>
+
+<script>
+	//util
+	var Util = {
+		remove: function(contents, target, prop) {
+			var findIndex = contents.findIndex(itm => item[prop] == target[prop]);
+			if (findIndex < 0) {
+				console.log('not found object')
+			}
+			contents.splice(findIndex, 1);
+		}
+	} 
+	// view article
+	var UI = {};
+	UI.postItem = function(data) {
+		 console.log(data);
+		 $('#posts').append(`<a href="javascript:;" class="list-group-item" data-key="${data.id}">${data.title}</a>`)
+	}
+	// collection article
+	// collection factory
+function Collection(initialContents){
+		function add(newItem){
+			return function(collection) {
+				return collection.concat(newItem)
+			}
+		};
+		
+		function update(updateItem){
+			return function(collection) {
+				var findIndex = collection.findIndex(item => item.id === updateItem.id);
+				if (findIndex < 0){
+					return collection
+				}
+				return collection[findIndex] = Object.assign(collection[findIndex], updateItem)
+			}
+		};
+		
+		function remove(removeItem){
+			return function(collection) {
+				var findIndex = collection.findIndex(item => item.id === updateItem.id);
+				if (findIndex < 0){
+					return collection
+				}
+				return collection.splice(findIndex, 1);
+			}
+		}
+		
+		
+		this.add = new Bacon.Bus();
+		this.update = new Bacon.Bus();
+		this.remove = new Bacon.Bus();
+		this.destroy = new Bacon.Bus();
+		
+		var change = this.add.map(add)
+									.merge(this.update.map(update))
+									.merge(this.remove.map(remove))
+									.merge(this.destroy.map(destroy));
+						
+		this.all = change.scan(initialContents, (collection, f) => f(collection));
+		this.changes = this.all.changes();
+		
+	}
+	var Model = {
+		create: function(initialContents){
+			var addBus = new Bacon.Bus;
+			var removeBus = new Bacon.Bus;
+			var contentsProperty = Bacon.update({
+				initialContents,
+				addBus, function(contents, post) {
+					return contents.concat(post)
+				},
+				removeBus, function(contents, post){
+					return Util.remove(contents, post, 'id')
+				}
+			});
+			return {
+				addBus,
+				removeBus,
+				contentsProperty
+			}
+		}
+	}
+	
+	
+	
+	//parse initialize
+	Parse.initialize("123456");
+  Parse.serverURL = 'http://portal.xiandusi.com:1337/example';
+	
+	//parse login
+	Parse.User.logIn('abc','123456', {
+		success: user => console.log('login success'),
+		error: err => console.log('login fail', err)
+	});
+	
+	//subscribe socket
+	var postsQuery = new Parse.Query('Posts');
+	var postsSubs = postsQuery.subscribe();
+	
+	var posts$ = Bacon.fromBinder(sink => {
+		postsSubs.on('create', res => sink(res.toJSON()	))
+		return function() {}
+	})
+
+	//postsSubs.on('create', res => postsModel.addBus.push(res.toJSON()))
+
+	postsSubs.on('delete', res => console.log(res));
+	postsSubs.on('update', res => console.log(res));
+	
+	postsSubs.on('error', res => console.log('error:', res));
+	
+	//model initialze
+	var postsModel = {}
+	var postsModelInit = function(res) {
+		if (!res){
+			postsModel.create([]);
+			return;
+		}
+		postsModel = Model.create(res.map(item => item.toJSON()));
+		//postsModel.addBus.plug(posts$);
+		postsModel.contentsProperty.onValue(res => console.log('____res:',res))
+	}
+	
+	// query initialize posts
+	postsQuery.find()
+	          .then(postsModelInit)
+	
+</script>
+
+</body>
+</html>
