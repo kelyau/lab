@@ -1,0 +1,21 @@
+{
+  "name": "preact-start",
+  "version": "0.0.1",
+  "description": "preact rxjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "preact",
+    "rxjs"
+  ],
+  "author": "kenlyau",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^2.6.1"
+  },
+  "dependencies": {
+    "webpack-dev-server": "^2.4.5"
+  }
+}
