@@ -12,12 +12,13 @@ export default class App extends preact.Component {
   
   handleRoute = (e) => {
     this.setState({currentUrl : e.url});
-  }
-  componentDidMount(){
-    if (!userCurrent()){
-      Router.route('/login')
+    const user = userCurrent();
+    if (e.url === '/'){
+      !user && Router.route('/login')
     }
-    
+    if (e.url === '/login'){
+      user && Router.route('/')
+    }
   }
   render() {
     return (

@@ -1,6 +1,6 @@
 import preact from 'preact'
 import { route } from 'preact-router'
-import { userLogin } from './service'
+import { userLogin, userRegister } from './service'
 
 
 export default class Login extends preact.Component {
@@ -17,7 +17,10 @@ export default class Login extends preact.Component {
       .catch(res => console.log(res))
   }
   register = (e) => {
-
+    e.preventDefault();
+    userRegister(this.userRef.value, this.passRef.value, this.emailRef.value)
+      .then(res => route('/'))
+      .catch(res => console.log(res))
   }
   render({}, {toggle}) {
     let formContent;
@@ -50,6 +53,10 @@ export default class Login extends preact.Component {
           <div className="input-group">
             <div className="input-group-addon"><img src="./public/icons/core/lock.svg" /></div>
             <input ref={(ref) => this.passRef = ref} type="password" className="form-control" />
+          </div>
+          <div className="input-group">
+            <div className="input-group-addon"><img src="./public/icons/communication/mail.svg" /></div>
+            <input ref={(ref) => this.emailRef = ref} type="email" className="form-control" />
           </div>
           <div className="btns text-center">
             <button type="submit" className="btn btn-success">Register</button>&nbsp;

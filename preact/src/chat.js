@@ -1,5 +1,6 @@
 import preact from 'preact'
-import { MessageSubscription, getMessages, sendMessage } from './service'
+import route from 'preact-router'
+import { MessageSubscription, getMessages, sendMessage, userLogout } from './service'
 
 class Message extends preact.Component {
   
@@ -11,7 +12,10 @@ class Message extends preact.Component {
           <ul>
             {messages.map(message => {
               return (
-                <li>{message.content}</li>
+                <li>
+                  <span>({message.nike})</span>{message.content}
+                  <p>{message.createdAt}</p>
+                </li>
               )
             })}
           </ul>
@@ -57,12 +61,18 @@ export default class Chat extends preact.Component {
     this.msgs = this.msgs.concat(msg);
     this.setState({msgs: this.msgs});
     setTimeout(() => {
-      this.messageRef.base.scrollTop = 99999;
+      this.messageRef && (this.messageRef.base.scrollTop = 99999);
     },1)
     
   }
   sendMsg(msg){
     sendMessage(msg);
+  }
+  logout(){
+    userLogout()
+      .then(res => {
+        location.reload()
+      })
   }
   componentWillMount(){
     MessageSubscription.on('create', obj => {
@@ -74,6 +84,10 @@ export default class Chat extends preact.Component {
       <div className="container-fluid chat">
         <div className="row">
           <div className="col-md-4 col-md-offset-4 col-xs-12">
+            <p className="text-right">
+              <a href="javascript:;" onClick={this.logout}>Logout</a>
+            </p>
+
             <Message ref={e => this.messageRef = e} msgs={msgs}/>
             <MsgInput send={this.sendMsg} />
           </div>

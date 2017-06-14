@@ -15,14 +15,33 @@ export function userLogin(user, pass) {
   return Parse.User.logIn(user, pass)
 }
 
+export function userLogout(){
+  return Parse.User.logOut()
+}
+
+export function userRegister(user, pass, email){
+  const newUser = new Parse.User({
+    username: user,
+    password: pass,
+    email: email
+  })
+  return newUser.signUp(null)
+}
+
 export function getMessages() {
   return msgQuery.descending('createdAt').limit(20).find()
 }
 
-export function sendMessage(msg) {
+
+export async function sendMessage(msg) {
+  const current = Parse.User.current();
+
+  const query = new Parse.Query(Parse.User);
+  const user = await query.equalTo('objectId', current.id).first();
   const message = new Message({
     content: msg,
-    sender: Parse.User.current().id
+    sender: user.toJSON().id,
+    nike: user.toJSON().username
   })
   return message.save(null);
 }
