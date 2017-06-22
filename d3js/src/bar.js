@@ -55,11 +55,7 @@ export default function bar() {
             .attr('transform', `translate(${boxPl}, ${boxPt})`)
             .append('text')
             .attr('transform', 'rotate(-90)')
-  barContext.append('g')
-            .attr('transform', `translate(${boxPl}, 20)`)
-            .append('text')
-            .text('Bar')
-            .style('font-size', 20)                         
+                      
   //柱体
   barContext.select('.bars')
             .selectAll('rect')
