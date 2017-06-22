@@ -12,6 +12,7 @@ export default function rotation() {
 	.attr('height', box.height)
 	.style('display', 'block')
 	.style('margin', '20px auto')
+	 
 	
 var projection = d3.geoAzimuthalEqualArea()
     .scale(	80)
@@ -23,7 +24,8 @@ var path = d3.geoPath()
 
 var graticule = d3.geoGraticule();
 
-	
+
+//canvas 实现	
 context.append("path")
     .datum(graticule)
     .attr("class", "graticule")
@@ -32,4 +34,18 @@ context.append("path")
 	.style('stroke', '#777777')
 	.style('stroke-width', '1px')
 	.style('stroke-opacity', '0.5')
+	
+  const ctx = d3.select('body')
+     .append('canvas')
+	 .attr('width', box.width)
+	 .attr('height', box.height)
+	 .style('display', 'block')
+	 .style('margin', '20px auto')
+	 .node()
+	 .getContext('2d')
+	 
+  const ctxPath = d3.geoPath().projection(projection).context(ctx);
+  ctx.beginPath();
+  ctxPath(graticule())
+  ctx.stroke()
 }
