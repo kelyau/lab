@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e6017a82c2a7599678d7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c9d51767b5e5f1b69472"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -706,14 +706,14 @@
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(4)(__webpack_require__.s = 4);
+/******/ 	return hotCreateRequire(7)(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(8)(undefined);
 // imports
 
 
@@ -725,241 +725,6 @@ exports.push([module.i, "h1 {\r\n\tcolor: green;\r\n}", ""]);
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = {
-  run: function run() {
-    [1, 2, 3].map(function (item) {
-      return console.log(item);
-    });
-    console.log('success!**');
-  }
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-          value: true
-});
-exports.default = bar;
-
-var _d = __webpack_require__(6);
-
-var d3 = _interopRequireWildcard(_d);
-
-var _data = __webpack_require__(9);
-
-var _data2 = _interopRequireDefault(_data);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-window.d3 = d3;
-
-function bar() {
-          var boxWidth = 400;
-          var boxHeight = 200;
-          var boxPl = 25;
-          var boxPb = 25;
-          var boxPt = 25;
-          var boxPr = 25;
-          var width = 10;
-          var distance = 15;
-
-          function valF(collection) {
-                    return collection.map(function (item) {
-                              return d3.values(item)[0];
-                    });
-          }
-          var xScale = d3.scaleLinear().domain([0, _data2.default.temperature.length - 1]).range([0, boxWidth - boxPl - boxPr]);
-          var yScale = d3.scaleLinear().domain([0, d3.max(valF(_data2.default.temperature))]).range([boxHeight - boxPb - boxPt, 0]);
-          var xAxis = d3.axisBottom().scale(xScale).tickFormat(function (i) {
-                    return d3.keys(_data2.default.temperature[i])[0];
-          });
-          var yAxis = d3.axisLeft().scale(yScale).tickFormat(function (i) {
-                    return !(i % 5) ? i : null;
-          });
-
-          function clcX(d, i) {
-                    return xScale(i);
-          }
-
-          function clcH(d, i) {
-                    var h = boxHeight - boxPb - boxPl - yScale(d3.values(d)[0]);
-                    return h;
-          }
-          function clcY(d, i) {
-                    var y = boxHeight - clcH(d, i);
-                    return y;
-          }
-
-          var barContext = d3.select('body').append('svg');
-          barContext.attr('width', boxWidth).attr('height', boxHeight).style('display', 'block').style('margin', '0 auto');
-          barContext.append('g').classed('bars', true).attr('transform', 'translate(' + boxPl + ', -' + boxPb + ')');
-          barContext.append('g').classed('tooltips', true).attr('transform', 'translate(' + boxPl + ', -' + boxPb + ')');
-          barContext.append('g').classed('xaxis', true).attr('transform', 'translate(' + boxPl + ', ' + (boxHeight - boxPt) + ' )');
-          barContext.append('g').classed('yaxis', true).attr('transform', 'translate(' + boxPl + ', ' + boxPt + ')').append('text').attr('transform', 'rotate(-90)');
-          barContext.append('g').attr('transform', 'translate(' + boxPl + ', 20)').append('text').text('Bar').style('font-size', 20
-          //柱体
-          );barContext.select('.bars').selectAll('rect').data(_data2.default.temperature).enter().append('rect').attr('width', width).attr('height', clcH).attr("x", clcX).attr("y", clcY).style('fill', 'cadetblue'
-          //文字标签          
-          );barContext.select('.tooltips').selectAll('text').data(_data2.default.temperature).enter().append('text').attr('x', clcX).attr('y', clcY).text(function (item) {
-                    return d3.values(item)[0];
-          }
-          //坐标尺
-          );barContext.select('.xaxis').call(xAxis);
-          barContext.select('.yaxis').call(yAxis);
-}
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(0);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(7)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(true) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept(0, function() {
-			var newContent = __webpack_require__(0);
-			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _app = __webpack_require__(1);
-
-var _app2 = _interopRequireDefault(_app);
-
-var _bar = __webpack_require__(2);
-
-var _bar2 = _interopRequireDefault(_bar);
-
-__webpack_require__(3);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_app2.default.run();
-(0, _bar2.default)();
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://d3js.org Version 4.9.1. Copyright 2017 Mike Bostock.
@@ -17831,7 +17596,349 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"temperature": [
+		{
+			"2017-6-1": 22
+		},
+		{
+			"2017-6-2": 20
+		},
+		{
+			"2017-6-3": 12
+		},
+		{
+			"2017-6-4": 22
+		},
+		{
+			"2017-6-5": 26
+		},
+		{
+			"2017-6-6": 28
+		},
+		{
+			"2017-6-7": 22
+		}
+	]
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  run: function run() {
+    [1, 2, 3].map(function (item) {
+      return console.log(item);
+    });
+    console.log('success!**');
+  }
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+          value: true
+});
+exports.default = bar;
+
+var _d = __webpack_require__(1);
+
+var d3 = _interopRequireWildcard(_d);
+
+var _data = __webpack_require__(2);
+
+var _data2 = _interopRequireDefault(_data);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+window.d3 = d3;
+
+function bar() {
+          var boxWidth = 400;
+          var boxHeight = 200;
+          var boxPl = 25;
+          var boxPb = 25;
+          var boxPt = 25;
+          var boxPr = 25;
+          var width = 10;
+          var distance = 15;
+
+          function valF(collection) {
+                    return collection.map(function (item) {
+                              return d3.values(item)[0];
+                    });
+          }
+          var xScale = d3.scaleLinear().domain([0, _data2.default.temperature.length - 1]).range([0, boxWidth - boxPl - boxPr]);
+          var yScale = d3.scaleLinear().domain([0, d3.max(valF(_data2.default.temperature))]).range([boxHeight - boxPb - boxPt, 0]);
+          var xAxis = d3.axisBottom().scale(xScale).tickFormat(function (i) {
+                    return d3.keys(_data2.default.temperature[i])[0];
+          });
+          var yAxis = d3.axisLeft().scale(yScale).tickFormat(function (i) {
+                    return !(i % 5) ? i : null;
+          });
+
+          function clcX(d, i) {
+                    return xScale(i);
+          }
+
+          function clcH(d, i) {
+                    var h = boxHeight - boxPb - boxPl - yScale(d3.values(d)[0]);
+                    return h;
+          }
+          function clcY(d, i) {
+                    var y = boxHeight - clcH(d, i);
+                    return y;
+          }
+
+          var barContext = d3.select('body').append('svg');
+          barContext.attr('width', boxWidth).attr('height', boxHeight).style('display', 'block').style('margin', '0 auto');
+          barContext.append('g').classed('bars', true).attr('transform', 'translate(' + boxPl + ', -' + boxPb + ')');
+          barContext.append('g').classed('tooltips', true).attr('transform', 'translate(' + boxPl + ', -' + boxPb + ')');
+          barContext.append('g').classed('xaxis', true).attr('transform', 'translate(' + boxPl + ', ' + (boxHeight - boxPt) + ' )');
+          barContext.append('g').classed('yaxis', true).attr('transform', 'translate(' + boxPl + ', ' + boxPt + ')').append('text').attr('transform', 'rotate(-90)');
+          barContext.append('g').attr('transform', 'translate(' + boxPl + ', 20)').append('text').text('Bar').style('font-size', 20
+          //柱体
+          );barContext.select('.bars').selectAll('rect').data(_data2.default.temperature).enter().append('rect').attr('width', width).attr('height', clcH).attr("x", clcX).attr("y", clcY).style('fill', 'cadetblue'
+          //文字标签          
+          );barContext.select('.tooltips').selectAll('text').data(_data2.default.temperature).enter().append('text').attr('x', clcX).attr('y', clcY).text(function (item) {
+                    return d3.values(item)[0];
+          }
+          //坐标尺
+          );barContext.select('.xaxis').call(xAxis);
+          barContext.select('.yaxis').call(yAxis);
+}
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = line;
+
+var _d = __webpack_require__(1);
+
+var d3 = _interopRequireWildcard(_d);
+
+var _data = __webpack_require__(2);
+
+var _data2 = _interopRequireDefault(_data);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function line() {
+  var box = {
+    width: 400,
+    height: 200,
+    paddingLeft: 25,
+    paddingTop: 25,
+    paddingRight: 25,
+    paddingBottom: 25
+  };
+  var lineContext = d3.select('body').append('svg').style('display', 'block').style('margin', '0 auto');
+
+  lineContext.attr('width', box.width).attr('height', box.height);
+
+  lineContext.append('g').classed('line', true);
+  lineContext.append('g').classed('tooltips', true);
+  lineContext.append('g').classed('xaxis', true);
+  lineContext.append('g').classed('yaxis', true);
+  lineContext.append('g').classed('titl', true);
+
+  function valF(collection) {
+    return collection.map(function (item) {
+      return d3.values(item)[0];
+    });
+  }
+
+  var xScale = d3.scaleLinear().domain([0, (_data2.default.temperature.length - 1) * 1.1]).range([0, box.width - box.paddingLeft - box.paddingRight]);
+  var yScale = d3.scaleLinear().domain([0, d3.max(valF(_data2.default.temperature)) * 1.1]).range([box.height - box.paddingTop - box.paddingBottom, 0]);
+  var xAxis = d3.axisBottom().scale(xScale).ticks(_data2.default.temperature.length - 1).tickFormat(function (i) {
+    return d3.keys(_data2.default.temperature[i])[0];
+  });
+  var yAxis = d3.axisLeft().scale(yScale).ticks(3);
+
+  function clcLine(data) {
+    var line = d3.line().x(function (d, i) {
+      return xScale(i);
+    }).y(function (d) {
+      return yScale(d3.values(d)[0]);
+    });
+    return line(data);
+  }
+  // 画线
+  lineContext.select('.line').attr('transform', 'translate(' + box.paddingLeft + ', ' + box.paddingTop + ')').append('path').attr('d', clcLine(_data2.default.temperature)).attr('fill', 'none').attr('stroke', 'red').attr('strokeWidth', 2
+
+  //坐标尺
+  );lineContext.select('.xaxis').attr('transform', 'translate(' + box.paddingLeft + ', ' + (box.height - box.paddingBottom) + ')').call(xAxis);
+  lineContext.select('.yaxis').attr('transform', 'translate(' + box.paddingLeft + ', ' + box.paddingTop + ')').call(yAxis);
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(0);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(9)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(true) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept(0, function() {
+			var newContent = __webpack_require__(0);
+			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _app = __webpack_require__(3);
+
+var _app2 = _interopRequireDefault(_app);
+
+var _bar = __webpack_require__(4);
+
+var _bar2 = _interopRequireDefault(_bar);
+
+var _line = __webpack_require__(5);
+
+var _line2 = _interopRequireDefault(_line);
+
+__webpack_require__(6);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_app2.default.run();
+(0, _bar2.default)();
+(0, _line2.default)();
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -17877,7 +17984,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(8);
+var	fixUrls = __webpack_require__(10);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -18190,7 +18297,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports) {
 
 
@@ -18283,36 +18390,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"temperature": [
-		{
-			"2017-6-1": 22
-		},
-		{
-			"2017-6-2": 20
-		},
-		{
-			"2017-6-3": 12
-		},
-		{
-			"2017-6-4": 22
-		},
-		{
-			"2017-6-5": 26
-		},
-		{
-			"2017-6-6": 28
-		},
-		{
-			"2017-6-7": 22
-		}
-	]
-};
 
 /***/ })
 /******/ ]);
