@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c9d51767b5e5f1b69472"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f721f6946633f23ac04f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -706,25 +706,11 @@
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(7)(__webpack_require__.s = 7);
+/******/ 	return hotCreateRequire(10)(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(8)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "h1 {\r\n\tcolor: green;\r\n}", ""]);
-
-// exports
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://d3js.org Version 4.9.1. Copyright 2017 Mike Bostock.
@@ -17596,6 +17582,20 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(11)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "h1 {\r\n\tcolor: green;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
@@ -17656,7 +17656,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = bar;
 
-var _d = __webpack_require__(1);
+var _d = __webpack_require__(0);
 
 var d3 = _interopRequireWildcard(_d);
 
@@ -17712,8 +17712,8 @@ function bar() {
           barContext.append('g').classed('bars', true).attr('transform', 'translate(' + boxPl + ', -' + boxPb + ')');
           barContext.append('g').classed('tooltips', true).attr('transform', 'translate(' + boxPl + ', -' + boxPb + ')');
           barContext.append('g').classed('xaxis', true).attr('transform', 'translate(' + boxPl + ', ' + (boxHeight - boxPt) + ' )');
-          barContext.append('g').classed('yaxis', true).attr('transform', 'translate(' + boxPl + ', ' + boxPt + ')').append('text').attr('transform', 'rotate(-90)');
-          barContext.append('g').attr('transform', 'translate(' + boxPl + ', 20)').append('text').text('Bar').style('font-size', 20
+          barContext.append('g').classed('yaxis', true).attr('transform', 'translate(' + boxPl + ', ' + boxPt + ')').append('text').attr('transform', 'rotate(-90)'
+
           //柱体
           );barContext.select('.bars').selectAll('rect').data(_data2.default.temperature).enter().append('rect').attr('width', width).attr('height', clcH).attr("x", clcX).attr("y", clcY).style('fill', 'cadetblue'
           //文字标签          
@@ -17735,9 +17735,62 @@ function bar() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = dragging;
+
+var _d = __webpack_require__(0);
+
+var d3 = _interopRequireWildcard(_d);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function dragging() {
+  var box = {
+    width: 400,
+    height: 200,
+    padding: 20
+  };
+  var radius = 22;
+  var colors = d3.scaleOrdinal().range(d3.schemeCategory20);
+  var svgContext = d3.select('body').append('svg').attr('width', box.width).attr('height', box.height).style('display', 'block').style('margin', '20px auto');
+
+  var circles = d3.range(20).map(function () {
+    return {
+      x: Math.round(Math.random() * (box.width - radius * 2) + radius),
+      y: Math.round(Math.random() * (box.height - radius * 2) + radius)
+    };
+  });
+  svgContext.selectAll('circle').data(circles).enter().append('circle').attr('cx', function (d) {
+    return d.x;
+  }).attr('cy', function (d) {
+    return d.y;
+  }).attr('r', radius).style('fill', function (d, i) {
+    return colors(i);
+  }).call(d3.drag().on('start', dragStart).on('drag', dragIng).on('end', dragEnd));
+
+  function dragStart(d) {
+    d3.select(this).raise().classed('active', true);
+  }
+  function dragIng(d) {
+    d3.select(this).attr('cx', d.x = d3.event.x).attr('cy', d.y = d3.event.y);
+  }
+  function dragEnd(d) {
+    d3.select(this).classed('active', false);
+  }
+}
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = line;
 
-var _d = __webpack_require__(1);
+var _d = __webpack_require__(0);
 
 var d3 = _interopRequireWildcard(_d);
 
@@ -17798,13 +17851,130 @@ function line() {
 }
 
 /***/ }),
-/* 6 */
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = pie;
+
+var _d = __webpack_require__(0);
+
+var d3 = _interopRequireWildcard(_d);
+
+var _data = __webpack_require__(2);
+
+var _data2 = _interopRequireDefault(_data);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function pie() {
+  var box = {
+    width: 400,
+    height: 200,
+    innerRadius: 40,
+    outerRadius: 80
+
+    //插入svg
+  };var pieContext = d3.select('body').append('svg').style('display', 'block').style('margin', '20px auto').attr('height', box.height).attr('width', box.width);
+
+  //插入图例容器
+  pieContext.append('g').attr('class', 'legend').attr('transform', 'translate(' + (box.width - 90) + ', 0)');
+
+  var arcs = d3.pie().value(function (d) {
+    return d3.values(d)[0];
+  })(_data2.default.temperature);
+  var colors = d3.schemeCategory10;
+  var arc = d3.arc().innerRadius(box.innerRadius).outerRadius(box.outerRadius);
+  pieContext.selectAll('g.arc').data(arcs).enter().append('g').attr('class', 'arc').attr('transform', 'translate(' + box.width / 2 + ', ' + box.height / 2 + ')').append('path').attr('d', arc).attr('fill', function (d, i) {
+    return colors[d.index];
+  }
+
+  //插入图例
+  );pieContext.select('.legend').selectAll('rect').data(arcs).enter().append('rect').attr('x', 0).attr('y', function (d, i) {
+    return i * 20;
+  }).attr('width', 10).attr('height', 10).attr('fill', function (d) {
+    return colors[d.index];
+  }
+
+  //插入图例文字
+  );pieContext.select('.legend').selectAll('text').data(arcs).enter().append('text').attr('x', 20).attr('y', function (d, i) {
+    return i * 20 + 10;
+  }).text(function (d) {
+    return d3.keys(d.data)[0];
+  });
+}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = rotation;
+
+var _d = __webpack_require__(0);
+
+var d3 = _interopRequireWildcard(_d);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function rotation() {
+  var box = {
+    width: 400,
+    height: 400,
+    scale: 180
+  };
+  var context = d3.select('body').append('svg').attr('width', box.width).attr('height', box.height).style('display', 'block').style('margin', '20px auto');
+
+  var projection = d3.geoAzimuthalEqualArea().scale(80).translate([box.width / 2, box.height / 2]).precision(0.1);
+
+  var path = d3.geoPath().projection(projection);
+
+  var graticule = d3.geoGraticule();
+
+  context.append("path").datum(graticule).attr("class", "graticule").attr("d", path).style('fill', 'none').style('stroke', '#777777').style('stroke-width', '1px').style('stroke-opacity', '0.5'
+
+  //canvas 实现	动态旋转
+  );function dynCtxPath() {
+    var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
+    var dynProjection = d3.geoAzimuthalEqualArea().scale(80).translate([box.width / 2, box.height / 2]).rotate([x, 0, -10]).precision(0.1);
+
+    return d3.geoPath().projection(dynProjection).context(ctx);
+  }
+  var ctx = d3.select('body').append('canvas').attr('width', box.width).attr('height', box.height).style('display', 'block').style('margin', '20px auto').node().getContext('2d');
+
+  var ctxPath = d3.geoPath().projection(projection).context(ctx);
+
+  d3.timer(function (elapsed) {
+    ctx.clearRect(0, 0, box.width, box.height);
+    ctx.beginPath();
+    dynCtxPath(elapsed / 500)(graticule());
+    ctx.strokeStyle = 'rgba(150,150,150, 0.5)';
+    ctx.stroke();
+    ctx.restore();
+  });
+}
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(0);
+var content = __webpack_require__(1);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -17812,14 +17982,14 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(9)(content, options);
+var update = __webpack_require__(12)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(true) {
 	// When the styles change, update the <style> tags
 	if(!content.locals) {
-		module.hot.accept(0, function() {
-			var newContent = __webpack_require__(0);
+		module.hot.accept(1, function() {
+			var newContent = __webpack_require__(1);
 			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
 			update(newContent);
 		});
@@ -17829,7 +17999,7 @@ if(true) {
 }
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17843,20 +18013,35 @@ var _bar = __webpack_require__(4);
 
 var _bar2 = _interopRequireDefault(_bar);
 
-var _line = __webpack_require__(5);
+var _line = __webpack_require__(6);
 
 var _line2 = _interopRequireDefault(_line);
 
-__webpack_require__(6);
+var _pie = __webpack_require__(7);
+
+var _pie2 = _interopRequireDefault(_pie);
+
+var _dragging = __webpack_require__(5);
+
+var _dragging2 = _interopRequireDefault(_dragging);
+
+var _rotation = __webpack_require__(8);
+
+var _rotation2 = _interopRequireDefault(_rotation);
+
+__webpack_require__(9);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _app2.default.run();
 (0, _bar2.default)();
 (0, _line2.default)();
+(0, _pie2.default)();
+(0, _dragging2.default)();
+(0, _rotation2.default)();
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*
@@ -17938,7 +18123,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -17984,7 +18169,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(10);
+var	fixUrls = __webpack_require__(13);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -18297,7 +18482,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports) {
 
 
