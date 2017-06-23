@@ -4,6 +4,7 @@ import line from './line.js'
 import pie from './pie'
 import dragging from './dragging'
 import rotation from './rotation'
+import zoom from './zoom'
 import './assets/css/style.css'
 
 
@@ -13,3 +14,4 @@ line();
 pie();
 dragging();
 rotation();
+zoom();
