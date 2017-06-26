@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>singleton</title>
+  </head>
+  <body>
+    <h1>view console</h1>
+    <script>
+      /* 普通构造函数 */
+      console.log('普通构造函数');
+      function NormalFunc() {
+        this.start_time = 0;
+        this.bang = 'normal';
+      }
+      var nor = new NormalFunc;
+      var nor2 = new NormalFunc;
+      console.log('nor === nor2 :',nor === nor2)
+      nor.start_time = 20;
+      console.log('设置nor.start_time = 20 后的nor', nor);
+      console.log('no2', nor2)      
+
+      /* 单列模式 */
+      console.log('单体模式的构造函数')
+      function Universe() {
+        if (Universe.instance) {
+          return Universe.instance;
+        }
+        this.start_time = 0;
+        this.bang = 'Big';
+ 
+        Universe.instance = this;
+      }
+
+      var uni = new Universe;
+      var uni2 = new Universe;
+      console.log('uni === uni2 :',uni === uni2)
+      
+      uni.start_time = 10;
+      console.log('设置uni.start_time = 10 后的uni', uni)
+      console.log('uni2', uni2)
+    </script>
+  </body>
+</html>
