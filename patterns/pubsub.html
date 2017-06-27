@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>pubsub</title>
+  </head>
+  <body>
+    <h3>Event.listen('customEvent', function(){alert(1)})</h3>
+	<h3>Event.listen('customEvent', function(){alert(2)})</h3>
+	<button>event.trigger('customEvent')</button>Event.trigger('customEvent')
+    <script src="./util.js"></script>
+	<script>
+    //简单事件模型
+	var Event = {
+	  fnList: {},
+	  listen: function(key, fn){
+	    if (!this.fnList[key]){
+		  this.fnList[key] = [];
+		}
+		this.fnList[key].push(fn)
+	  },
+	  trigger: function(){
+	    var key = Array.prototype.shift.call(arguments),
+		    fnArray = this.fnList[key];
+	    if(!fnArray || fnArray.length === 0) {
+		  return false;
+		}
+		for (var i=0,len = fnArray.length; i < len; i++){
+		  fnArray[i].apply(this, arguments);
+		}
+	  }
+	}
+	
+	Event.listen('customEvent', function(){alert(1)})
+	Event.listen('customEvent', function(){alert(2)})
+	var btn = document.querySelector('button');
+	btn.addEventListener('click', function(){
+	  Event.trigger('customEvent')
+	}, false)
+	</script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>factory</title>
+  </head>
+  <body>
+    <h1>view console</h1>
+    <script src="./util.js"></script>
+	<script>
+    //简单工厂，提供统一的封装入口
+	console.log('简单工厂');
+	(function(){
+	  var Car = function(type, cfg) {
+	    this.name = cfg.name;
+		return this[type](cfg);
+	  }
+	  Car.prototype = {
+	    bmw: function(cfg){
+		  console.log(cfg.name + '飞起来了')
+		},
+		qq: function(cfg) {
+		  console.log(cfg.name + '跑起来了')
+		}
+	  }
+	  var bmw = new Car('bmw', {name: '宝马'});
+	  var qq = new Car('qq', {name: 'qq'});
+	  console.log('bmw',bmw)
+	  console.log('qq', qq)
+	})()
+	
+	//抽象工厂,接口的实现
+	console.log('抽象工厂');
+	(function(){
+	  var Car = function() {};
+	  Car.prototype = {
+	    getPrice: function(){throw new Error('抽象方法不能调用')},
+		getSpeed: function(){throw new Error('抽象方法不能调用')}
+	  }
+	  //object.create 实现继承
+	  var bmw = Object.create(Car.prototype);
+	  //bmw.getPrice();
+	  //重新接口方法
+	  bmw.getPrice = function() {
+	    console.log('要卖50万')
+	  }
+	  bmw.getPrice();
+	})()
+	</script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>observer</title>
+  </head>
+  <body>
+
+    <script src="./util.js"></script>
+	<script>
+    //目标
+	var Subject = function(){
+	   this.observers = [];
+	}
+	Subject.prototype = {
+	  subscribe: function(observer){
+		   this.observers.push(observer);
+		 },
+		 unsubscribe: function(observer){
+		   var index = this.observers.indexOf(observer);
+		   if (index > -1){
+		     this.observers.splice(index,1)
+		   }
+		 },
+		 notify: function(observer){
+		   var index = this.observers.indexOf(observer);
+		   if (index > -1){
+		     this.observers[index].notify(index);
+		   }
+		 },
+		 notifyAll: function(){
+		   var len = this.observers.length;
+		   for(var i=0; i<len; i++){
+		     this.observers[i].notify(i);
+		   }
+		 }
+
+	}
+	//观察者
+	var Observer = function(){
+	  return {
+	    notify: function(index){
+		  console.log("Observer " + index + "is notified!")
+		}
+	  }
+	}
+	var subject = new Subject;
+	var observer1 = new Observer;
+	subject.subscribe(observer1);
+	subject.notify(observer1);
+	</script>
+  </body>
+</html>
