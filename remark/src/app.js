@@ -4,6 +4,10 @@ import {elementStyle, elementClass, elementRemoveClass} from './util';
 
 export default {
   run(){
+    if (!window.getComputedStyle) {
+      alert('sorry not support this browser');
+      return;
+    }
     scrollbar.start({
       reverse: true,
     });

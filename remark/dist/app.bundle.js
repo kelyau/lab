@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "52ff5598159f6849aad7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b930fa384f91fbb6fa82"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -820,6 +820,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
   run: function run() {
+    if (!window.getComputedStyle) {
+      alert('sorry not support this browser');
+      return;
+    }
     _scrollbar2.default.start({
       reverse: true
     });
