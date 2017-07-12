@@ -205,7 +205,8 @@ function start(config = {}) {
       _config.scrollbarYRatio = config.reverse ?
                              (_config.scrollbarYInnerLeft + _config.offsetY) / (parseInt(elementStyle(_config.scrollWrap, 'width')) - parseInt(elementStyle(_config.scrollbarYInner, 'width'))) 
                              : (_config.scrollbarYInnerTop + _config.offsetY) / (parseInt(elementStyle(_config.scrollWrap, 'height')) - parseInt(elementStyle(_config.scrollbarYInner, 'height')))
-      if (_config.scrollbarYRatio >= 1 || _config.scrollbarYRatio <= 0) {
+
+      if (_config.scrollbarYRatio > 1 || _config.scrollbarYRatio < 0) {
         return;
       }
       if (config.reverse) {
@@ -223,7 +224,8 @@ function start(config = {}) {
       _config.scrollbarXRatio = config.reverse ?
                               (_config.scrollbarXInnerTop + _config.offsetX) / (parseInt(elementStyle(_config.scrollWrap, 'height')) - parseInt(elementStyle(_config.scrollbarXInner, 'height')))
                               : (_config.scrollbarXInnerLeft + _config.offsetX) / (parseInt(elementStyle(_config.scrollWrap, 'width')) - parseInt(elementStyle(_config.scrollbarXInner, 'width')))
-      if (_config.scrollbarXRatio >= 1 || _config.scrollbarXRatio <= 0) {
+
+      if (_config.scrollbarXRatio > 1 || _config.scrollbarXRatio < 0) {
         return;
       }
       if (config.reverse) {

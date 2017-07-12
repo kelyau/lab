@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b930fa384f91fbb6fa82"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0b31bac7cb6285036a1f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -1229,7 +1229,8 @@ function start() {
       //垂直滚动条
       _config.offsetY = config.reverse ? (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) - _config.startX : (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) - _config.startY;
       _config.scrollbarYRatio = config.reverse ? (_config.scrollbarYInnerLeft + _config.offsetY) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width')) - parseInt((0, _util.elementStyle)(_config.scrollbarYInner, 'width'))) : (_config.scrollbarYInnerTop + _config.offsetY) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height')) - parseInt((0, _util.elementStyle)(_config.scrollbarYInner, 'height')));
-      if (_config.scrollbarYRatio >= 1 || _config.scrollbarYRatio <= 0) {
+
+      if (_config.scrollbarYRatio > 1 || _config.scrollbarYRatio < 0) {
         return;
       }
       if (config.reverse) {
@@ -1244,7 +1245,8 @@ function start() {
       //横向滚动条
       _config.offsetX = config.reverse ? (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) - _config.startY : (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) - _config.startX;
       _config.scrollbarXRatio = config.reverse ? (_config.scrollbarXInnerTop + _config.offsetX) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height')) - parseInt((0, _util.elementStyle)(_config.scrollbarXInner, 'height'))) : (_config.scrollbarXInnerLeft + _config.offsetX) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width')) - parseInt((0, _util.elementStyle)(_config.scrollbarXInner, 'width')));
-      if (_config.scrollbarXRatio >= 1 || _config.scrollbarXRatio <= 0) {
+
+      if (_config.scrollbarXRatio > 1 || _config.scrollbarXRatio < 0) {
         return;
       }
       if (config.reverse) {
