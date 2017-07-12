@@ -4,7 +4,7 @@
   "description": "webpack+babel",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --hot --inline --color",
+    "start": "cross-env NODE_ENV=development ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --hot --inline --color",
     "build": "cross-env NODE_ENV=production ./node_modules/webpack/bin/webpack.js --color",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,6 +1,6 @@
 # Test Demo for Remark
-- demo 访问链接 [http://lab.kenlyau.com/remark/dist/](http://lab.kenlyau.com/remark/dist/)
-- 代码见 src目录
+- demo 访问链接 [http://kenlyau.github.io/lab/remark/dist/](http://kenlyau.github.io/lab/remark/dist/)
+- 代码见src目录
 
 ## Structure
 ```

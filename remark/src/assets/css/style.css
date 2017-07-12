@@ -5,3 +5,48 @@ html, body {
 	padding: 0;
 	margin: 0;
 }
+
+.modal-back {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	opacity: 0.6;
+	background: #000000;
+}
+.modal-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+  width: 300px;
+	height: 200px;
+  margin-top: -100px;
+	margin-left: -150px;
+	background: #ffffff;
+}
+.modal-guide {
+	background: transparent;
+}
+.scrollbar-guide {
+	background: #ffffff;
+	padding: 2px 10px;
+	position: fixed;
+	left: 20px;
+	bottom: 80px;
+}
+.scrollbar-guide::before {
+	content: '';
+	height: 0;
+	width: 0;
+	border-width: 30px 15px;
+	border-style: solid;
+	border-color: #ffffff transparent transparent transparent;
+	position: absolute;
+	margin-top: 60px;
+}
+.scrollbar-y-wrap.guide-active {
+  z-index: 9999;
+	background: #ffffff;
+	opacity: 0.9;
+}

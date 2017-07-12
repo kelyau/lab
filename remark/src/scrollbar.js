@@ -1,68 +1,21 @@
+import {elementStyle, elementClass, elementRemoveClass} from './util';
+
 var _config = {};
 
 /**
- * 设置样式
- * @param {element} target 
- * @param {string||object} key 
- * @param {string} value 
- */
-function elementStyle(target, key, value){
-  if (!target || !key) {
-    return;
-  }
-  if (typeof key === 'object'){
-    for (let p in key) {
-      if (key.hasOwnProperty(p)){
-        target.style[p] = key[p]
-      }
-    }
-    return;
-  }
-  if (!value){
-    var finalStyle;
-    if (window.getComputedStyle){
-     finalStyle = window.getComputedStyle(target)[key];
-    }
-    return finalStyle
-  }
-  target.style[key] = value;
-}
-
-/**
- * 设置class/获取是否包含class
- * @param {element} target 
- * @param {string} key 
- * @param {boolean} flag 
- */
-function elementClass(target, key, flag) {
-  if (!target || !key) {
-    return;
-  }
-  if (!flag) {
-    return target.className.indexOf(key) > -1
-  }
-  if (target.className.indexOf(key) > -1) {
-    return;
-  }
-  target.className = target.className + ' ' + key;
-}
-
-/**
- * 删除class
- * @param {element} target 
- * @param {string} key 
- */
-function elementRemoveClass(target, key) {
-  target.className = target.className.replace((' ' + key), '');
-}
-
-/**
  * 初始化
- * @param {obj} config 
+ * @param {object} config
+ * @param {boolean} config.reverse //反转滚动条
+ * @param {object} config.yWrap //y滚动条样式
+ * @param {object} config.yInner //y滚动条滑块样式
+ * @param {object} config.xWrap //x滚动条样式
+ * @param {object} config.xInner //x滚动条滑块样式
+ * @param {string} config.content //滚动对象
  */
 function start(config = {}) {
   //获取容器对象
   _config.scrollWrap = document.getElementById(config.content || 'content');
+  _config.reverse = config.reverse;
   //计算和设置容器样式
   _config.wrapHeight = elementStyle(_config.scrollWrap, 'height');
   if (!_config.wrapHeight){
@@ -154,19 +107,20 @@ function start(config = {}) {
       width: scrollbarXInnerWidth * 100 + '%'
     }
   }
+
   if (config.reverse){
     //设置反转
     scrollbarStyle = {
       yWrap: {
         position: 'absolute',
-        height: '6px',
+        height: '16px',
         width: '100%',
         bottom: 0,
         left: 0,
       },
       yInner: {
         position: 'absolute',
-        height: '6px',
+        height: '16px',
         bottom: 0,
         left: 0,
         background: '#999',
@@ -174,14 +128,14 @@ function start(config = {}) {
       },
       xWrap: {
         position: 'absolute',
-        width: '6px',
+        width: '16px',
         height: '100%',
         right: 0,
         top: 0
       },
       xInner: {
         position: 'absolute',
-        width: '6px',
+        width: '16px',
         right: 0,
         top: 0,
         background: '#999',
@@ -195,20 +149,35 @@ function start(config = {}) {
   elementStyle(_config.scrollbarXWrap, Object.assign({}, scrollbarStyle.xWrap, config.xWrap));
 
   //滚动事件
-  _config.scrollEvents = {
-    mousedown: enableMoving,
-    mousemove: moveContent,
-    mouseup: stopMoving,
-    mouseleave: stopMoving
-  };
+  
+  //兼容手机touch
+  if ('ontouchstart' in window) {
+    _config.scrollEvents = {
+      touchstart: enableMoving,
+      touchmove: moveContent,
+      touchend: stopMoving
+    }
+  } else {
+    _config.scrollEvents = {
+      mousedown: enableMoving,
+      mousemove: moveContent,
+      mouseup: stopMoving,
+      mouseleave: stopMoving
+    };
+  }
+
+  /**
+   * 拖动开始
+   * @param {event} e 
+   */
   function enableMoving(e) {
     if (!checkScrollbarInner(e)){
       return;
     }
     e.preventDefault();
     elementClass(e.target, 'draggable', true);
-    _config.startY = e.clientY;
-    _config.startX = e.clientX;
+    _config.startY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+    _config.startX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     if (e.target === _config.scrollbarYInner) {
       if (config.reverse) {
         _config.scrollbarYInnerLeft = parseInt(elementStyle(e.target, 'left'));
@@ -223,12 +192,16 @@ function start(config = {}) {
         _config.scrollbarXInnerLeft = parseInt(elementStyle(e.target, 'left'));
       }
     } 
-    console.log('start',e.clientY)
   };
+
+  /**
+   * 拖动
+   * @param {event} e 
+   */
   function moveContent(e) {
     if (elementClass(_config.scrollbarYInner, 'draggable')) {
       //垂直滚动条
-      _config.offsetY = config.reverse ? e.clientX - _config.startX  : e.clientY - _config.startY;
+      _config.offsetY = config.reverse ? (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) - _config.startX  : (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) - _config.startY;
       _config.scrollbarYRatio = config.reverse ?
                              (_config.scrollbarYInnerLeft + _config.offsetY) / (parseInt(elementStyle(_config.scrollWrap, 'width')) - parseInt(elementStyle(_config.scrollbarYInner, 'width'))) 
                              : (_config.scrollbarYInnerTop + _config.offsetY) / (parseInt(elementStyle(_config.scrollWrap, 'height')) - parseInt(elementStyle(_config.scrollbarYInner, 'height')))
@@ -242,11 +215,11 @@ function start(config = {}) {
       }
       
       _config.scrollContent.style.top = - (parseInt(elementStyle(_config.scrollContent, 'height')) - parseInt(elementStyle(_config.scrollWrap, 'height'))) * _config.scrollbarYRatio + 'px';
-      console.log('move', e.clientY)
+
     }
     if (elementClass(_config.scrollbarXInner, 'draggable')) {
       //横向滚动条
-      _config.offsetX = e.clientX - _config.startX;
+      _config.offsetX = config.reverse ? (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) - _config.startY : (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) - _config.startX;
       _config.scrollbarXRatio = config.reverse ?
                               (_config.scrollbarXInnerTop + _config.offsetX) / (parseInt(elementStyle(_config.scrollWrap, 'height')) - parseInt(elementStyle(_config.scrollbarXInner, 'height')))
                               : (_config.scrollbarXInnerLeft + _config.offsetX) / (parseInt(elementStyle(_config.scrollWrap, 'width')) - parseInt(elementStyle(_config.scrollbarXInner, 'width')))
@@ -260,28 +233,48 @@ function start(config = {}) {
       }
       
       _config.scrollContent.style.left = - (parseInt(elementStyle(_config.scrollContent, 'height')) - parseInt(elementStyle(_config.scrollWrap, 'width'))) * _config.scrollbarXRatio + 'px';
-      console.log('move', e.clientX)
     }
   
   };
+  /**
+   * 拖动停止
+   * @param {event} e 
+   */
   function stopMoving(e) {
     elementRemoveClass(_config.scrollbarYInner, 'draggable')
     elementRemoveClass(_config.scrollbarXInner, 'draggable')
-    console.log('stop', e.clientY)
   }
+
+  //检查点击对象是否在滚动条上
   function checkScrollbarInner(e){
     return e.target === _config.scrollbarYInner || e.target === _config.scrollbarXInner
   }
+
   //把事件绑定到document，防止拖动出目标对象
   for (let value in _config.scrollEvents) {
     document.addEventListener(value, _config.scrollEvents[value], false)
   }
 
 }
+
+/**
+ * 重置计算和设置容器样式
+ */
 function reset() {
-  
+  if (_config.scrollWrap.parentElement === document.body) {
+    elementStyle(_config.scrollWrap, 'height', window.innerHeight + 'px');
+  }
+  var scrollbarYInnerHeight = (parseInt(elementStyle(_config.scrollWrap, 'height')) / parseInt(elementStyle(_config.scrollContent, 'height')));
+  var scrollbarXInnerWidth = (parseInt(elementStyle(_config.scrollWrap, 'width')) / parseInt(elementStyle(_config.scrollContent, 'width')))
+
+  elementStyle(_config.scrollbarYInner, _config.reverse ? 'width' : 'height', scrollbarYInnerHeight * 100 + '%');
+  elementStyle(_config.scrollbarXInner, _config.reverse ? 'height' : 'width', scrollbarXInnerWidth * 100 + '%');
 }
+
+/**
+ * 获取配置
+ */
 function getConfig() {
   return _config;
 }
-export default { start, getConfig }
+export default { start, getConfig, reset }

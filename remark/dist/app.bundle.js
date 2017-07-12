@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4455022db16805d2e6d4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "52ff5598159f6849aad7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -706,98 +706,11 @@
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire(3)(__webpack_require__.s = 3);
+/******/ 	return hotCreateRequire(5)(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "* {\r\n\tbox-sizing: border-box;\r\n}\r\nhtml, body {\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n}", ""]);
-
-// exports
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _scrollbar = __webpack_require__(4);
-
-var _scrollbar2 = _interopRequireDefault(_scrollbar);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  run: function run() {
-    _scrollbar2.default.start({
-      reverse: true
-    });
-  }
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(0);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(6)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(true) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept(0, function() {
-			var newContent = __webpack_require__(0);
-			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _app = __webpack_require__(1);
-
-var _app2 = _interopRequireDefault(_app);
-
-__webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_app2.default.run();
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -809,8 +722,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _config = {};
-
+exports.elementStyle = elementStyle;
+exports.elementClass = elementClass;
+exports.elementRemoveClass = elementRemoveClass;
 /**
  * 设置样式
  * @param {element} target 
@@ -867,17 +781,265 @@ function elementRemoveClass(target, key) {
   target.className = target.className.replace(' ' + key, '');
 }
 
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(7)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "* {\r\n\tbox-sizing: border-box;\r\n}\r\nhtml, body {\r\n\tpadding: 0;\r\n\tmargin: 0;\r\n}\r\n\r\n.modal-back {\r\n\tposition: fixed;\r\n\ttop: 0;\r\n\tbottom: 0;\r\n\tleft: 0;\r\n\tright: 0;\r\n\topacity: 0.6;\r\n\tbackground: #000000;\r\n}\r\n.modal-content {\r\n\tposition: absolute;\r\n\ttop: 50%;\r\n\tleft: 50%;\r\n  width: 300px;\r\n\theight: 200px;\r\n  margin-top: -100px;\r\n\tmargin-left: -150px;\r\n\tbackground: #ffffff;\r\n}\r\n.modal-guide {\r\n\tbackground: transparent;\r\n}\r\n.scrollbar-guide {\r\n\tbackground: #ffffff;\r\n\tpadding: 2px 10px;\r\n\tposition: fixed;\r\n\tleft: 20px;\r\n\tbottom: 80px;\r\n}\r\n.scrollbar-guide::before {\r\n\tcontent: '';\r\n\theight: 0;\r\n\twidth: 0;\r\n\tborder-width: 30px 15px;\r\n\tborder-style: solid;\r\n\tborder-color: #ffffff transparent transparent transparent;\r\n\tposition: absolute;\r\n\tmargin-top: 60px;\r\n}\r\n.scrollbar-y-wrap.guide-active {\r\n  z-index: 9999;\r\n\tbackground: #ffffff;\r\n\topacity: 0.9;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _scrollbar = __webpack_require__(6);
+
+var _scrollbar2 = _interopRequireDefault(_scrollbar);
+
+var _guide = __webpack_require__(4);
+
+var _guide2 = _interopRequireDefault(_guide);
+
+var _util = __webpack_require__(0);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  run: function run() {
+    _scrollbar2.default.start({
+      reverse: true
+    });
+    window.addEventListener('resize', _scrollbar2.default.reset);
+
+    var scrollbarY = document.querySelector('.scrollbar-y-wrap');
+    var upEvent = 'ontouchstart' in window ? 'touchstart' : 'mousedown';
+
+    if (scrollbarY && (0, _util.elementStyle)(scrollbarY, 'display') === 'block') {
+      var scrollbarGuide = (0, _guide2.default)({
+        className: 'modal-guide',
+        content: '<div class="scrollbar-guide"><h3>\u62D6\u52A8\u6A2A\u5411\u6EDA\u52A8\u6761\u53EF\u4EE5\u6EDA\u52A8\u5185\u5BB9</h3></div>',
+        closeCallback: function closeCallback() {
+          scrollbarY.removeEventListener(upEvent, scrollbarGuide.close, false);
+        }
+      });
+      (0, _util.elementClass)(scrollbarY, 'guide-active', true);
+
+      scrollbarY.addEventListener(upEvent, scrollbarGuide.close, false);
+    }
+  }
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(1);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(8)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(true) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept(1, function() {
+			var newContent = __webpack_require__(1);
+			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _util = __webpack_require__(0);
+
+var modal = function () {
+  var id = 0;
+  var modalEle;
+
+  /**
+   * 打开弹窗
+   * @param {object} config 
+   */
+  function open() {
+    var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    var _config = {
+      closeByBody: true, //是否点击空白关闭
+      className: '', //弹窗内容class
+      content: '' //弹窗内容
+    };
+
+    var modalId = ++id;
+    Object.assign(_config, config);
+
+    //创建弹窗容器
+    modalEle = document.createElement('div');
+    (0, _util.elementClass)(modalEle, 'modal', true);
+    if (document.querySelector('.modal')) {
+      modalEle = document.querySelector('.modal');
+    } else {
+      modalEle = document.body.appendChild(modalEle);
+    }
+
+    //创建弹窗背景
+    var modalBackEle = document.createElement('div');
+    modalBackEle.id = 'modal-back-' + modalId;
+    (0, _util.elementClass)(modalBackEle, 'modal-back', true);
+    modalBackEle = modalEle.appendChild(modalBackEle);
+
+    _config.closeByBody && modalBackEle.addEventListener('click', function (e) {
+      close(modalId);
+    });
+
+    //创建弹窗内容
+    var modalContentEle = document.createElement('div');
+    modalContentEle.id = 'modal-content-' + modalId;
+    (0, _util.elementClass)(modalContentEle, 'modal-content', true);
+    _config.className && (0, _util.elementClass)(modalContentEle, _config.className, true);
+    modalContentEle.innerHTML = _config.content;
+    modalContentEle = modalEle.appendChild(modalContentEle);
+
+    return modalId;
+  }
+
+  /**
+   * 关闭弹窗
+   * @param {number} id 
+   */
+  function close(id) {
+    if (!id) {
+      document.body.removeChild(modalEle);
+    }
+    var tmpModalBackEle = document.getElementById('modal-back-' + id);
+    var tmpModalContentEle = document.getElementById('modal-content-' + id);
+    modalEle.removeChild(tmpModalBackEle);
+    modalEle.removeChild(tmpModalContentEle);
+  }
+  return {
+    open: open,
+    close: close
+  };
+}();
+
+/**
+ * 引导方法
+ * @param {object} config 
+ */
+function guide() {
+  var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var _config = {
+    flag: true, //是否引导
+    closeCallback: function closeCallback() {}, //关闭引导回调
+    className: '', //modal的class
+    content: '' //引导的html内容
+  };
+  Object.assign(_config, config);
+  if (_config.flag) {
+    _config.guideModalId = modal.open({
+      className: _config.className,
+      content: _config.content
+    });
+  }
+
+  return {
+    /**
+     * 关闭引导
+     */
+    close: function close() {
+      _config.closeCallback();
+      modal.close(_config.guideModalId);
+    }
+  };
+}
+
+exports.default = guide;
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _app = __webpack_require__(2);
+
+var _app2 = _interopRequireDefault(_app);
+
+__webpack_require__(3);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_app2.default.run();
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _util = __webpack_require__(0);
+
+var _config = {};
+
 /**
  * 初始化
- * @param {obj} config 
+ * @param {object} config
+ * @param {boolean} config.reverse //反转滚动条
+ * @param {object} config.yWrap //y滚动条样式
+ * @param {object} config.yInner //y滚动条滑块样式
+ * @param {object} config.xWrap //x滚动条样式
+ * @param {object} config.xInner //x滚动条滑块样式
+ * @param {string} config.content //滚动对象
  */
 function start() {
   var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
   //获取容器对象
   _config.scrollWrap = document.getElementById(config.content || 'content');
+  _config.reverse = config.reverse;
   //计算和设置容器样式
-  _config.wrapHeight = elementStyle(_config.scrollWrap, 'height');
+  _config.wrapHeight = (0, _util.elementStyle)(_config.scrollWrap, 'height');
   if (!_config.wrapHeight) {
     if (config.height) {
       _config.wrapHeight = config.height;
@@ -889,7 +1051,7 @@ function start() {
     _config.wrapHeight = window.innerHeight + 'px';
   }
   _config.scrollWrap.className = _config.scrollWrap.className + ' scroll-wrap';
-  elementStyle(_config.scrollWrap, {
+  (0, _util.elementStyle)(_config.scrollWrap, {
     height: _config.wrapHeight,
     position: 'relative',
     overflow: 'hidden'
@@ -901,7 +1063,7 @@ function start() {
   _config.scrollWrap.innerHTML = '';
   _config.scrollWrap.appendChild(_config.scrollContent);
   _config.scrollContent.className = 'scroll-content';
-  elementStyle(_config.scrollContent, {
+  (0, _util.elementStyle)(_config.scrollContent, {
     position: 'relative',
     padding: '10px',
     top: '0'
@@ -917,9 +1079,9 @@ function start() {
   _config.scrollbarYInner = _config.scrollbarYWrap.appendChild(_config.scrollbarYInner);
   _config.scrollbarYInner.className = 'scrollbar-inner';
 
-  var scrollbarYInnerHeight = parseInt(elementStyle(_config.scrollWrap, 'height')) / parseInt(elementStyle(_config.scrollContent, 'height'));
+  var scrollbarYInnerHeight = parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height')) / parseInt((0, _util.elementStyle)(_config.scrollContent, 'height'));
   if (scrollbarYInnerHeight === 1) {
-    elementStyle(_config.scrollbarYWrap, 'display', 'none');
+    (0, _util.elementStyle)(_config.scrollbarYWrap, 'display', 'none');
   }
 
   _config.scrollbarXWrap = document.createElement('div');
@@ -930,9 +1092,9 @@ function start() {
   _config.scrollbarXInner = _config.scrollbarXWrap.appendChild(_config.scrollbarXInner);
   _config.scrollbarXInner.className = 'scrollbar-inner';
 
-  var scrollbarXInnerWidth = parseInt(elementStyle(_config.scrollWrap, 'width')) / parseInt(elementStyle(_config.scrollContent, 'width'));
+  var scrollbarXInnerWidth = parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width')) / parseInt((0, _util.elementStyle)(_config.scrollContent, 'width'));
   if (scrollbarXInnerWidth === 1) {
-    elementStyle(_config.scrollbarXWrap, 'display', 'none');
+    (0, _util.elementStyle)(_config.scrollbarXWrap, 'display', 'none');
   }
 
   var scrollbarStyle = {
@@ -967,19 +1129,20 @@ function start() {
       width: scrollbarXInnerWidth * 100 + '%'
     }
   };
+
   if (config.reverse) {
     //设置反转
     scrollbarStyle = {
       yWrap: {
         position: 'absolute',
-        height: '6px',
+        height: '16px',
         width: '100%',
         bottom: 0,
         left: 0
       },
       yInner: {
         position: 'absolute',
-        height: '6px',
+        height: '16px',
         bottom: 0,
         left: 0,
         background: '#999',
@@ -987,14 +1150,14 @@ function start() {
       },
       xWrap: {
         position: 'absolute',
-        width: '6px',
+        width: '16px',
         height: '100%',
         right: 0,
         top: 0
       },
       xInner: {
         position: 'absolute',
-        width: '6px',
+        width: '16px',
         right: 0,
         top: 0,
         background: '#999',
@@ -1002,47 +1165,66 @@ function start() {
       }
     };
   }
-  elementStyle(_config.scrollbarYWrap, Object.assign({}, scrollbarStyle.yWrap, config.yWrap));
-  elementStyle(_config.scrollbarYInner, Object.assign({}, scrollbarStyle.yInner, config.yInner));
-  elementStyle(_config.scrollbarXInner, Object.assign({}, scrollbarStyle.xInner, config.xInner));
-  elementStyle(_config.scrollbarXWrap, Object.assign({}, scrollbarStyle.xWrap, config.xWrap));
+  (0, _util.elementStyle)(_config.scrollbarYWrap, Object.assign({}, scrollbarStyle.yWrap, config.yWrap));
+  (0, _util.elementStyle)(_config.scrollbarYInner, Object.assign({}, scrollbarStyle.yInner, config.yInner));
+  (0, _util.elementStyle)(_config.scrollbarXInner, Object.assign({}, scrollbarStyle.xInner, config.xInner));
+  (0, _util.elementStyle)(_config.scrollbarXWrap, Object.assign({}, scrollbarStyle.xWrap, config.xWrap));
 
   //滚动事件
-  _config.scrollEvents = {
-    mousedown: enableMoving,
-    mousemove: moveContent,
-    mouseup: stopMoving,
-    mouseleave: stopMoving
-  };
+
+  //兼容手机touch
+  if ('ontouchstart' in window) {
+    _config.scrollEvents = {
+      touchstart: enableMoving,
+      touchmove: moveContent,
+      touchend: stopMoving
+    };
+  } else {
+    _config.scrollEvents = {
+      mousedown: enableMoving,
+      mousemove: moveContent,
+      mouseup: stopMoving,
+      mouseleave: stopMoving
+    };
+  }
+
+  /**
+   * 拖动开始
+   * @param {event} e 
+   */
   function enableMoving(e) {
     if (!checkScrollbarInner(e)) {
       return;
     }
     e.preventDefault();
-    elementClass(e.target, 'draggable', true);
-    _config.startY = e.clientY;
-    _config.startX = e.clientX;
+    (0, _util.elementClass)(e.target, 'draggable', true);
+    _config.startY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+    _config.startX = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     if (e.target === _config.scrollbarYInner) {
       if (config.reverse) {
-        _config.scrollbarYInnerLeft = parseInt(elementStyle(e.target, 'left'));
+        _config.scrollbarYInnerLeft = parseInt((0, _util.elementStyle)(e.target, 'left'));
       } else {
-        _config.scrollbarYInnerTop = parseInt(elementStyle(e.target, 'top'));
+        _config.scrollbarYInnerTop = parseInt((0, _util.elementStyle)(e.target, 'top'));
       }
     }
     if (e.target === _config.scrollbarXInner) {
       if (config.reverse) {
-        _config.scrollbarXInnerTop = parseInt(elementStyle(e.target, 'too'));
+        _config.scrollbarXInnerTop = parseInt((0, _util.elementStyle)(e.target, 'too'));
       } else {
-        _config.scrollbarXInnerLeft = parseInt(elementStyle(e.target, 'left'));
+        _config.scrollbarXInnerLeft = parseInt((0, _util.elementStyle)(e.target, 'left'));
       }
     }
-    console.log('start', e.clientY);
   };
+
+  /**
+   * 拖动
+   * @param {event} e 
+   */
   function moveContent(e) {
-    if (elementClass(_config.scrollbarYInner, 'draggable')) {
+    if ((0, _util.elementClass)(_config.scrollbarYInner, 'draggable')) {
       //垂直滚动条
-      _config.offsetY = config.reverse ? e.clientX - _config.startX : e.clientY - _config.startY;
-      _config.scrollbarYRatio = config.reverse ? (_config.scrollbarYInnerLeft + _config.offsetY) / (parseInt(elementStyle(_config.scrollWrap, 'width')) - parseInt(elementStyle(_config.scrollbarYInner, 'width'))) : (_config.scrollbarYInnerTop + _config.offsetY) / (parseInt(elementStyle(_config.scrollWrap, 'height')) - parseInt(elementStyle(_config.scrollbarYInner, 'height')));
+      _config.offsetY = config.reverse ? (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) - _config.startX : (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) - _config.startY;
+      _config.scrollbarYRatio = config.reverse ? (_config.scrollbarYInnerLeft + _config.offsetY) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width')) - parseInt((0, _util.elementStyle)(_config.scrollbarYInner, 'width'))) : (_config.scrollbarYInnerTop + _config.offsetY) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height')) - parseInt((0, _util.elementStyle)(_config.scrollbarYInner, 'height')));
       if (_config.scrollbarYRatio >= 1 || _config.scrollbarYRatio <= 0) {
         return;
       }
@@ -1052,13 +1234,12 @@ function start() {
         _config.scrollbarYInner.style.top = _config.scrollbarYInnerTop + _config.offsetY + 'px';
       }
 
-      _config.scrollContent.style.top = -(parseInt(elementStyle(_config.scrollContent, 'height')) - parseInt(elementStyle(_config.scrollWrap, 'height'))) * _config.scrollbarYRatio + 'px';
-      console.log('move', e.clientY);
+      _config.scrollContent.style.top = -(parseInt((0, _util.elementStyle)(_config.scrollContent, 'height')) - parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height'))) * _config.scrollbarYRatio + 'px';
     }
-    if (elementClass(_config.scrollbarXInner, 'draggable')) {
+    if ((0, _util.elementClass)(_config.scrollbarXInner, 'draggable')) {
       //横向滚动条
-      _config.offsetX = e.clientX - _config.startX;
-      _config.scrollbarXRatio = config.reverse ? (_config.scrollbarXInnerTop + _config.offsetX) / (parseInt(elementStyle(_config.scrollWrap, 'height')) - parseInt(elementStyle(_config.scrollbarXInner, 'height'))) : (_config.scrollbarXInnerLeft + _config.offsetX) / (parseInt(elementStyle(_config.scrollWrap, 'width')) - parseInt(elementStyle(_config.scrollbarXInner, 'width')));
+      _config.offsetX = config.reverse ? (e.changedTouches ? e.changedTouches[0].clientY : e.clientY) - _config.startY : (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) - _config.startX;
+      _config.scrollbarXRatio = config.reverse ? (_config.scrollbarXInnerTop + _config.offsetX) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height')) - parseInt((0, _util.elementStyle)(_config.scrollbarXInner, 'height'))) : (_config.scrollbarXInnerLeft + _config.offsetX) / (parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width')) - parseInt((0, _util.elementStyle)(_config.scrollbarXInner, 'width')));
       if (_config.scrollbarXRatio >= 1 || _config.scrollbarXRatio <= 0) {
         return;
       }
@@ -1068,31 +1249,53 @@ function start() {
         _config.scrollbarXInner.style.left = _config.scrollbarXInnerLeft + _config.offsetX + 'px';
       }
 
-      _config.scrollContent.style.left = -(parseInt(elementStyle(_config.scrollContent, 'height')) - parseInt(elementStyle(_config.scrollWrap, 'width'))) * _config.scrollbarXRatio + 'px';
-      console.log('move', e.clientX);
+      _config.scrollContent.style.left = -(parseInt((0, _util.elementStyle)(_config.scrollContent, 'height')) - parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width'))) * _config.scrollbarXRatio + 'px';
     }
   };
+  /**
+   * 拖动停止
+   * @param {event} e 
+   */
   function stopMoving(e) {
-    elementRemoveClass(_config.scrollbarYInner, 'draggable');
-    elementRemoveClass(_config.scrollbarXInner, 'draggable');
-    console.log('stop', e.clientY);
+    (0, _util.elementRemoveClass)(_config.scrollbarYInner, 'draggable');
+    (0, _util.elementRemoveClass)(_config.scrollbarXInner, 'draggable');
   }
+
+  //检查点击对象是否在滚动条上
   function checkScrollbarInner(e) {
     return e.target === _config.scrollbarYInner || e.target === _config.scrollbarXInner;
   }
+
   //把事件绑定到document，防止拖动出目标对象
   for (var value in _config.scrollEvents) {
     document.addEventListener(value, _config.scrollEvents[value], false);
   }
 }
-function reset() {}
+
+/**
+ * 重置计算和设置容器样式
+ */
+function reset() {
+  if (_config.scrollWrap.parentElement === document.body) {
+    (0, _util.elementStyle)(_config.scrollWrap, 'height', window.innerHeight + 'px');
+  }
+  var scrollbarYInnerHeight = parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height')) / parseInt((0, _util.elementStyle)(_config.scrollContent, 'height'));
+  var scrollbarXInnerWidth = parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width')) / parseInt((0, _util.elementStyle)(_config.scrollContent, 'width'));
+
+  (0, _util.elementStyle)(_config.scrollbarYInner, _config.reverse ? 'width' : 'height', scrollbarYInnerHeight * 100 + '%');
+  (0, _util.elementStyle)(_config.scrollbarXInner, _config.reverse ? 'height' : 'width', scrollbarXInnerWidth * 100 + '%');
+}
+
+/**
+ * 获取配置
+ */
 function getConfig() {
   return _config;
 }
-exports.default = { start: start, getConfig: getConfig };
+exports.default = { start: start, getConfig: getConfig, reset: reset };
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports) {
 
 /*
@@ -1174,7 +1377,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -1220,7 +1423,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(7);
+var	fixUrls = __webpack_require__(9);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -1533,7 +1736,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports) {
 
 

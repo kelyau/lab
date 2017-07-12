@@ -41,6 +41,9 @@ module.exports = {
     publicPath: configEnv.publicPath
   },
   devtool: "#source-map",
+  devServer: {
+    disableHostCheck: true
+  },
   module: {
     rules: [
       {
