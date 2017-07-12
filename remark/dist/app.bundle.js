@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0b31bac7cb6285036a1f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b86530e78b1626bb23d5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -827,6 +827,7 @@ exports.default = {
     _scrollbar2.default.start({
       reverse: true
     });
+
     window.addEventListener('resize', _scrollbar2.default.reset);
 
     var scrollbarY = document.querySelector('.scrollbar-y-wrap');
@@ -1084,7 +1085,7 @@ function start() {
   _config.scrollbarYInner.className = 'scrollbar-inner';
 
   var scrollbarYInnerHeight = parseInt((0, _util.elementStyle)(_config.scrollWrap, 'height')) / parseInt((0, _util.elementStyle)(_config.scrollContent, 'height'));
-  if (scrollbarYInnerHeight === 1) {
+  if (scrollbarYInnerHeight >= 1) {
     (0, _util.elementStyle)(_config.scrollbarYWrap, 'display', 'none');
   }
 
@@ -1097,7 +1098,7 @@ function start() {
   _config.scrollbarXInner.className = 'scrollbar-inner';
 
   var scrollbarXInnerWidth = parseInt((0, _util.elementStyle)(_config.scrollWrap, 'width')) / parseInt((0, _util.elementStyle)(_config.scrollContent, 'width'));
-  if (scrollbarXInnerWidth === 1) {
+  if (scrollbarXInnerWidth >= 1) {
     (0, _util.elementStyle)(_config.scrollbarXWrap, 'display', 'none');
   }
 
@@ -1290,6 +1291,17 @@ function reset() {
 
   (0, _util.elementStyle)(_config.scrollbarYInner, _config.reverse ? 'width' : 'height', scrollbarYInnerHeight * 100 + '%');
   (0, _util.elementStyle)(_config.scrollbarXInner, _config.reverse ? 'height' : 'width', scrollbarXInnerWidth * 100 + '%');
+
+  if (scrollbarYInnerHeight < 1) {
+    (0, _util.elementStyle)(_config.scrollbarYWrap, 'display', 'block');
+  } else {
+    (0, _util.elementStyle)(_config.scrollbarYWrap, 'display', 'none');
+  }
+  if (scrollbarXInnerWidth < 1) {
+    (0, _util.elementStyle)(_config.scrollbarXWrap, 'display', 'block');
+  } else {
+    (0, _util.elementStyle)(_config.scrollbarXWrap, 'display', 'none');
+  }
 }
 
 /**

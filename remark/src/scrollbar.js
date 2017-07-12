@@ -58,7 +58,7 @@ function start(config = {}) {
   _config.scrollbarYInner.className = 'scrollbar-inner';
  
   var scrollbarYInnerHeight = (parseInt(elementStyle(_config.scrollWrap, 'height')) / parseInt(elementStyle(_config.scrollContent, 'height')));
-  if (scrollbarYInnerHeight === 1) {
+  if (scrollbarYInnerHeight >= 1) {
     elementStyle(_config.scrollbarYWrap, 'display', 'none');
   }
 
@@ -71,7 +71,7 @@ function start(config = {}) {
   _config.scrollbarXInner.className = 'scrollbar-inner';
 
   var scrollbarXInnerWidth = (parseInt(elementStyle(_config.scrollWrap, 'width')) / parseInt(elementStyle(_config.scrollContent, 'width')))
-  if (scrollbarXInnerWidth === 1) {
+  if (scrollbarXInnerWidth >= 1) {
     elementStyle(_config.scrollbarXWrap, 'display', 'none');
   }
 
@@ -271,6 +271,17 @@ function reset() {
 
   elementStyle(_config.scrollbarYInner, _config.reverse ? 'width' : 'height', scrollbarYInnerHeight * 100 + '%');
   elementStyle(_config.scrollbarXInner, _config.reverse ? 'height' : 'width', scrollbarXInnerWidth * 100 + '%');
+
+  if (scrollbarYInnerHeight < 1) {
+    elementStyle(_config.scrollbarYWrap, 'display', 'block');
+  }else{
+    elementStyle(_config.scrollbarYWrap, 'display', 'none');
+  }
+  if (scrollbarXInnerWidth < 1) {
+    elementStyle(_config.scrollbarXWrap, 'display', 'block');
+  }else{
+    elementStyle(_config.scrollbarXWrap, 'display', 'none');
+  }
 }
 
 /**

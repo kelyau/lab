@@ -11,6 +11,7 @@ export default {
     scrollbar.start({
       reverse: true,
     });
+    
     window.addEventListener('resize', scrollbar.reset);
     
     var scrollbarY = document.querySelector('.scrollbar-y-wrap');
