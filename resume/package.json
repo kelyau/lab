@@ -1,0 +1,14 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "description": "## 个人信息 - 廖科/男/已婚/1986.01 - 四川师范大学成都学院(现四川工商学院)/电子商务/本科 - 电话：13880419943 - Email: 364723061@qq.com - Site: blog.kenlyau.com - Github: github.com/kenlyau - 期望职位: web前端 - 期望城市: 成都 - 期望薪资: 18k",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "markdown-pdf": "^8.0.0"
+  }
+}
