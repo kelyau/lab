@@ -45,6 +45,11 @@
     "webpack-dev-server": "^2.4.5"
   },
   "jest": {
-    "transform": {"^.+\\.js$": "babel-jest"}
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  },
+  "dependencies": {
+    "d3": "^4.10.0"
   }
 }
