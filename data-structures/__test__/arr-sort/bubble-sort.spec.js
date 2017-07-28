@@ -13,4 +13,5 @@ test('test bubble sort array by for loop', () => {
 })
 
 test('test bubble sort array by recursion', () => {
+  expect(bubbleSortRecursion(baseArray)).toEqual(correctArray);
 })

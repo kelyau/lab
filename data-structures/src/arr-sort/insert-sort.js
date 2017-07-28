@@ -1,18 +1,24 @@
 export function insertSortFor(arr){
   var tar = arr.map(i => i);
-  for (var i = 1, len = tar.length; i < len; i++) {
-    var pos;
-    for (var j = i -1; j  > 0; j --){
-      if (tar[i] < tar[j]) {
-         pos = j;
+  var len = arr.length;
+  var current;
+  
+  for (var i= 1; i < len; i++){
+
+    current = tar[i];
+    for (var j = i; j > 0; j--){
+      if (tar[j -1] > current){
+        tar[j] = tar[j - 1];
+        if (j === 1){
+          tar[j - 1] = current;
+        }
+      }else{
+        tar[j] = current;
+        break;
       }
-    }
-    if (pos > 1) {
-       var tmp = tar.splice(i, 1)[0];
-       tar.splice(pos-1, 0, tmp);
-    }else if (pos == 0){
-       tar.unshif(tmp)
-    }
+    } 
   }
+
   return tar
 }
+
