@@ -1,0 +1,47 @@
+{
+  "name": "webpack-babel-boilerplate",
+  "version": "0.0.1",
+  "description": "webpack+babel",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --host 0.0.0.0 --hot --inline --color",
+    "build": "cross-env NODE_ENV=production ./node_modules/webpack/bin/webpack.js --color",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenlyau/webpack-babel-boilerplate.git"
+  },
+  "keywords": [
+    "webpack",
+    "babel",
+    "es6",
+    "es7"
+  ],
+  "author": "kenlyau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenlyau/webpack-babel-boilerplate/issues"
+  },
+  "homepage": "https://github.com/kenlyau/webpack-babel-boilerplate#readme",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.2",
+    "clean-webpack-plugin": "^0.1.16",
+    "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^5.0.1",
+    "css-loader": "^0.28.4",
+    "html-loader": "^0.4.5",
+    "html-webpack-plugin": "^2.28.0",
+    "style-loader": "^0.18.2",
+    "svg-loader": "0.0.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
+  },
+  "dependencies": {
+    "d3": "^4.10.0",
+    "parse": "^1.10.0"
+  }
+}
