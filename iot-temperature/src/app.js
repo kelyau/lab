@@ -9,7 +9,7 @@ export default {
     });
   
     temperatureLive().on('create', res => {
-      addItem(res); 
+      showTemperature(res); 
     })
   
     var app = new PIXI.Application(window.innerWidth, window.innerHeight, {
@@ -22,20 +22,24 @@ export default {
     var container = new PIXI.Container;
     app.stage.addChild(container);
     
-    function addItem(data){
-      var rect = new PIXI.Graphics;
-      rect.lineStyle(0);
-      rect.beginFill(0xffff0b, 0.5);
-      rect.drawRect(0, 0, 2, data.get('t') * 3);
-
-      rect.x = 100 + (data._objCount - 10001) * 2;
-      rect.y = 400 - data.get('t') * 3;
-      container.addChild(rect);
-
+    var ts = new PIXI.Text(temperatureString(), {
+      fontFamily: 'Arial',
+      fontSize: 24,
+      fill: 0xff1010,
+      align: 'center'
+    });
+    ts.x = (window.innerWidth - ts.width) / 2;
+    ts.y = (window.innerHeight - ts.height) / 2;
+    container.addChild(ts);
+    function temperatureString(res){
+      var t = res ? res.get('t') : 0;
+      var h = res ? res.get('h') : 0;
+      return `当前温度：${t}  当前湿度：${h}`;
+    }
+    function showTemperature(res){
+       ts.text = temperatureString(res);
     }
 
-    
-    
 
   }
 }
