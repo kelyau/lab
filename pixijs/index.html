@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>base-pixijs</title>
+  <style>
+  html,body {
+    padding: 0;
+    margin: 0;
+  }
+  </style>
+</head>
+<body>
+
+<script src="./pixi.min.js"></script>
+<script>
+var pages = ['base', 'tree']
+var html = pages.map(page => `<li><a href="./${page}/">${page}</a></li>`).join('')
+var ul = document.createElement('ul')
+ul.innerHTML = html
+document.body.appendChild(ul)
+</script>
+</body>
+</html>
