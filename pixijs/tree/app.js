@@ -7,6 +7,8 @@ const container = new PIXI.Container();
 
 app.stage.addChild(container)
 
+
+
 const data = {
   root: {
     name: 'root',
@@ -94,8 +96,8 @@ function draw(orgData){
       }, dataLevel[level][step])
       arrayNode.push(node)
       //画节点
-      drawNode(node)
       drawLine(node, w, h, m, firstNode, lastNode)   
+      drawNode(node)
 
     }
   }
@@ -205,10 +207,58 @@ function drawNode(node){
   nodeCtx.x = node.x
   nodeCtx.y = node.y
 
+  nodeCtx.interactive = true
+  nodeCtx.on('click', e => {
+    e.stoped = true
+    e.stopPropagation()
+    console.log(e)
+  })
+
+  nodeCtx.on('mouseover', e => {
+    e.stoped = true
+    e.stopPropagation()
+    showTip(e, node)
+  })
+
+  nodeCtx.on('mouseout', e => {
+    e.stoped = true
+    e.stopPropagation()
+    hideTip(e)
+  })
+
   container.addChild(nodeCtx)
+  
+  
   return nodeCtx
   
 
+}
+
+var tip;
+function showTip(event, node){
+  var graphics = new PIXI.Graphics()
+  graphics.lineStyle(1, 0xFF00FF,1)
+  graphics.beginFill(0xFF00BB, 0.25)
+  graphics.drawRoundedRect(0, 0, 60, 30, 5)
+  graphics.endFill()
+
+  var text = new PIXI.Text(node.name)
+  text.x = 30 - text.width/2
+
+  tip = new PIXI.Container()
+  tip.addChild(graphics,text)
+  tip.x = event.data.global.x
+  tip.y = event.data.global.y
+  container.addChild(tip)  
+
+}
+
+function hideTip(event){
+  if (!tip){
+    return
+  }
+
+  container.removeChild(tip)
 }
 
 function placeholderNode(node){
@@ -222,6 +272,7 @@ function placeholderNode(node){
 
 draw(data.root)
 
-
-
+container.hitArea = new PIXI.Rectangle(0, 0, container.width, container.height)
+container.interactive = true
+container.on('click', e => console.log('container =>', e))
 
