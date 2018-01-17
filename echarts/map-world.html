@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>echarts map demo</title>
+</head>
+<body>
+  <div id="app" style="height:460px"></div>
+  <script type="text/javascript" src="./echarts.min.js"></script>
+  <script type="text/javascript" src="./map/world.js"></script>
+  <script type="text/javascript">
+  var dom = document.getElementById('app')
+  var myChart = echarts.init(dom)
+  var option = {
+    title: {
+      text:"echarts map \n uub"
+    },
+    series: [
+      {
+        type: 'map',
+        map: 'world'
+      }
+    ]
+  }
+  myChart.setOption(option, true)
+  </script>
+</body>
+</html>
