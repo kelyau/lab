@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>svg base</title>
+  <style>
+    body {padding: 0 100px;}
+  </style>
+</head>
+<body>
+  <h2>线(line)</h2>
+  <p>x1,y1,x2,y2</p>
+  <svg style="width:900px;height:100px">
+    <line x1="10" y1="10" x2="300" y2="70" stroke="red" stroke-width="2"></line>
+  </svg>
+  <h2>圆(circle)</h2>
+  <p>cx,cy,r</p>
+  <svg style="width:100px;height:100px">
+    <circle cx="50" cy="50" r="50" fill="skyblue"></circle>
+  </svg>
+  <h2>矩形(rect)</h2>
+  <p>x,y,width,height</p>
+  <svg style="width:100px;height:100px">
+    <rect x="10" y="10" width="80" height="80" fill="skyblue"></rect>
+  </svg>
+  <h2>椭圆(ellipse)</h2>
+  <p>cx,cy,rx,ry</p>
+  <svg style="width:900px;height:300px">
+    <ellipse cx="140" cy="100" rx="120" ry="30" fill="purple"></ellipse>
+    <ellipse cx="500" cy="100" rx="60" ry="60" fill="lime"></ellipse>
+  </svg>
+  <h2>多边形(polygon)</h2>
+  <p>points</p>
+  <svg style="width:900px; height:300px">
+    <polygon points="10,10, 80,10, 60,130" fill="purple"></polygon>
+    <polygon points="100,10 150,10 150,80 100,80" fill="lime"></polygon>
+  </svg>
+  <h2>路径(path)</h2>
+  <svg style="width:900px; height:300px">
+    <path d="M10,10 L130,130 L150,30 H190 V130" stroke="red" stroke-width="2" fill="none"></path>
+    <path d="M200,10 a80,30 0 1 1 0,180"></path>
+  </svg>
+</body>
+</html>
