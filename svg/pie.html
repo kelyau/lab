@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>svg pie</title>
+</head>
+<body>
+  <button>reset data</button>
+  <script>
+  const data = [
+    {value: 8, name: 'apple'},
+    {value: 2, name: 'orange'},
+    {value: 3, name: 'pomelo'},
+    {value: 1, name: 'pear'}
+  ]
+  const colors = ["#61C0BF", "#DA507A", "#BB3D49", "#DB4547"]
+  const r = 100
+
+  const svgEle = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+  svgEle.setAttributeNS(null, 'style', `width:${2*r}px;height:${2*r}px;`)
+  document.body.appendChild(svgEle)
+
+  function clcData(data) {
+    const total = data.map(item => item.value).reduce((a,b) => a + b)
+    var rotate = 0
+    return data.map(item => {
+      const percent = item.value / total
+      const ang = 360 * percent
+      const angClc = ang > 180 ? 360 - ang : ang
+      const arc = angClc * Math.PI / 180
+      var x = 0, y = 0, z = 0;
+      z = Math.sqrt(2*r*r - (2*r*r*Math.cos(arc)))
+      if (angClc <= 90) {
+        x = r * Math.sin(arc)
+      } else {
+        x = r * Math.sin((180 - angClc) * Math.PI / 180)
+      }
+      y = Math.sqrt(z * z - x * x)
+      if (ang <= 180) {
+        x = r + x
+      } else {
+        x = r - x
+      }
+      rotate = rotate + ang
+      return {
+        label: item.name,
+        data: item.value,
+        percent: percent,
+        percentLabel: percent.toFixed(2) + '%',
+        x: x,
+        y: y,
+        rotate: rotate - ang
+      }
+    })
+  }
+  function createPath(container, sectors) {
+    sectors.forEach((sector, index) => {
+      const largeArcFlag = sector.percent > 0.5 ? 1 : 0
+      const pathEle = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      pathEle.setAttributeNS(null, 'd', `M100,100 L100,0 A${r},${r} 0 ${largeArcFlag} 1 ${sector.x},${sector.y} L100,100`)
+      pathEle.setAttributeNS(null, 'fill', colors[index])
+      pathEle.setAttributeNS(null, 'transform', `rotate(${sector.rotate},${r},${r})`)
+      pathEle.setAttributeNS(null, 'stroke', 'white')
+      pathEle.setAttributeNS(null, 'stroke-width', '2')
+      pathEle.setAttributeNS(null, 'style', 'transition:all 0.5s;')
+      pathEle.id = `path-${index}`
+      container.appendChild(pathEle)
+    })
+  }
+  const sectors = clcData(data)
+  createPath(svgEle, sectors)
+  function resetPath(container, sectors) {
+    sectors.forEach((sector, index) => {
+      const largeArcFlag = sector.percent > 0.5 ? 1 : 0
+      const pathEle = container.getElementById(`path-${index}`)
+      pathEle.setAttributeNS(null, 'd', `M100,100 L100,0 A${r},${r} 0 ${largeArcFlag} 1 ${sector.x},${sector.y} L100,100`)
+      pathEle.setAttributeNS(null, 'transform', `rotate(${sector.rotate},${r},${r})`)
+    })
+  }
+  document.querySelector('button').addEventListener('click',() => {
+    const newdata = [
+      {value: 7, name: 'apple'},
+      {value: 5, name: 'orange'},
+      {value: 9, name: 'pomelo'},
+      {value: 2, name: 'pear'}
+    ]
+    const newsectors = clcData(newdata)
+    resetPath(svgEle, newsectors)
+  },false)
+  </script>
+</body>
+</html>
