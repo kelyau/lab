@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>svg bar</title>
+</head>
+<body>
+  <script>
+    const data = [
+      {value: 8, name: 'apple'},
+      {value: 2, name: 'orange'},
+      {value: 3, name: 'pomelo'},
+      {value: 1, name: 'pear'}
+    ]
+    const width = 600
+    const height = 400
+    function createElement(ele) {
+      return document.createElementNS('http://www.w3.org/2000/svg', ele)
+    }
+    function createAxis(container, w, h) {
+      const padding = {
+        x: 10,
+        y: 10
+      }
+      const axisGroup = createElement('g')
+      const xAxisLine = createElement('path')
+      xAxisLine.setAttributeNS(null, 'd', `M${padding.x},${h - 2 * padding.y} L${padding.x},${padding.y}`)
+      xAxisLine.setAttributeNS(null, 'stroke', 'lightgray')
+      xAxisLine.setAttributeNS(null, 'stroke-width', '2')
+
+      const yAxisLine = createElement('path')
+      yAxisLine.setAttributeNS(null, 'd', `M${padding.x},${h - 2 * padding.y} L${w - 2 * padding.x},${h - 2 * padding.y}`)
+      yAxisLine.setAttributeNS(null, 'stroke', 'lightgray')
+      yAxisLine.setAttributeNS(null, 'stroke-width', '2')
+
+      axisGroup.appendChild(xAxisLine)
+      axisGroup.appendChild(yAxisLine)
+      container.appendChild(axisGroup)
+    }
+    function createBar(container, sectors) {
+      if (!sectors) {
+        sectors = []
+      }
+      const barGroup = createElement('g')
+      container.appendChild(barGroup)
+      sectors.forEach(item => {
+        const bar = createElement('rect')
+        bar.setAttributeNS(null, 'x', item.x)
+        bar.setAttributeNS(null, 'y', item.y)
+        bar.setAttributeNS(null, 'height', item.height)
+        bar.setAttributeNS(null, 'width', item.width)
+        barGroup.appendChild(bar)
+      })
+    }
+    function clcData(data, w, h) {
+      const padding = {
+        x: 10,
+        y: 10
+      }
+      const total = data.length
+      const interval = 60
+      const piece = (w - 2 * padding.x) / total
+      const ratio = Math.floor((h - 2 * padding.y - 30) / clcMax(data.map(item => item.value)))
+      return data.map((item, index) => {
+        return {
+          x: interval + index * piece,
+          y: h - item.value * ratio - 2 * padding.y - 1,
+          width: piece - interval,
+          height: item.value * ratio
+        }
+      })
+    }
+    function clcMax(data) {
+      let target = 0
+      data.forEach(item => {
+        if (item > target) {
+          target = item
+        }
+      })
+      return target
+    }
+
+    const svgEle = createElement('svg')
+    svgEle.setAttributeNS(null, 'width', width)
+    svgEle.setAttributeNS(null, 'height', height)
+    document.body.appendChild(svgEle)
+    createAxis(svgEle, width, height)
+    createBar(svgEle, clcData(data, width, height))
+  </script>
+</body>
+</html>
